@@ -50,9 +50,7 @@
             </div>
         </div>
 
-        <div class="visual">
-            <img src="./images/login-visual.jpg" alt="Login Image" class="visual__img" />
-        </div>
+        <div class="visual"></div>
     </main>
 </body>
 

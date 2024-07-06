@@ -68,7 +68,9 @@
 
 .visual {
   min-height: 100vh;
-  overflow: hidden;
+  background-image: url(../images/login-visual.jpg);
+  background-size: cover;
+  background-position: center;
 }
 
 .visual__img {
