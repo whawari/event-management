@@ -1,0 +1,250 @@
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  --primary: #3f826d;
+  --primary-dark: #2e6c5a;
+  --secondary: #182825;
+  --accent: #3083dc;
+  --accent-dark: #1c5a9e;
+  --white: #ffffff;
+  --white-alpha-8: rgba(255, 255, 255, 0.08);
+  --black: #000000;
+  --black-alpha-8: rgba(0, 0, 0, 0.08);
+  --dark: #141414;
+  --gray-lighter: #d7d7d7;
+  --gray-light: #b1b1b1;
+  --gray-dark: #717171;
+
+  --text-dark: var(--dark);
+  --text-light: var(--white);
+
+  --input-border: var(--gray-lighter);
+  --input-border-hover: var(--gray-dark);
+  --input-border-focus: var(--accent);
+
+  --button-primary-color: var(--white);
+  --button-primary-bg: var(--primary);
+  --button-primary-bg-hover: var(--primary-dark);
+
+  --link-light: var(--white);
+  --link-dark: var(--dark);
+  --link-accent: var(--accent);
+
+  --form-field-info: var(--gray-dark);
+
+  --header-bg-scroll: var(--dark);
+  --header-burger-slice-bg: var(--white);
+  --header-burger-bg-hover: var(--white-alpha-8);
+
+  --navigation-drawer-bg: var(--white);
+  --navigation-drawer-close-slice-bg: var(--dark);
+  --navigation-drawer-close-bg-hover: var(--black-alpha-8);
+}
+
+html,
+body,
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+
+body,
+.text--dark {
+  color: var(--text-dark);
+}
+
+.text--light {
+  color: var(--text-light);
+}
+
+.text--center {
+  text-align: center;
+}
+
+body,
+p,
+.body1 {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.05em;
+}
+
+.body2 {
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.04em;
+}
+
+a {
+  font-weight: 500;
+  text-decoration: unset;
+}
+
+a,
+span {
+  display: inline-block;
+}
+
+h1 {
+  font-weight: 100;
+  font-size: 60px;
+  line-height: 80px;
+  letter-spacing: -0.05em;
+}
+
+.text--large {
+  font-size: 96px;
+  line-height: 120px;
+  letter-spacing: -0.015em;
+}
+
+h2 {
+  font-weight: 100;
+  font-size: 48px;
+  line-height: 56px;
+  letter-spacing: 0em;
+}
+
+h3 {
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: 0.0025em;
+}
+
+h4 {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: 0em;
+}
+
+h5 {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0.0015em;
+}
+
+.overline {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.015em;
+}
+
+label,
+.subtitle {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.001em;
+}
+
+.button {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.0125em;
+  text-transform: uppercase;
+  padding: 16px 40px;
+  border: unset;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button--primary {
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-color);
+}
+
+.button--primary:hover,
+.button--primary:focus-visible {
+  background-color: var(--button-primary-bg-hover);
+}
+
+.link {
+  transition: color 0.3s;
+  position: relative;
+}
+
+.link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--link);
+  transition: width 0.3s;
+}
+
+.link--light {
+  color: var(--link-light);
+}
+
+.link--light::after {
+  background-color: var(--link-light);
+}
+
+.link--dark {
+  color: var(--link-dark);
+}
+
+.link--dark::after {
+  background-color: var(--link-dark);
+}
+
+.link--accent {
+  color: var(--link-accent);
+}
+
+.link--accent::after {
+  background-color: var(--link-accent);
+}
+
+.link:hover::after,
+.link:focus-visible::after {
+  width: 100%;
+}
+
+.link--accent:hover::after,
+.link--accent:focus-visible::after {
+  width: 100%;
+}
+
+@media screen and (max-width: 959px) {
+  .text--large {
+    font-size: 72px;
+    line-height: 88px;
+    letter-spacing: -0.05em;
+  }
+}
+
+@media screen and (max-width: 639px) {
+  h1,
+  .text--large {
+    font-size: 40px;
+    line-height: 48px;
+    letter-spacing: 0em;
+  }
+
+  h2 {
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: 0.0025em;
+  }
+
+  h3 {
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 40px;
+    letter-spacing: 0.0025em;
+  }
+}

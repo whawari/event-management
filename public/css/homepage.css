@@ -1,0 +1,12 @@
+.hero {
+  width: 100%;
+  min-height: 100vh;
+  background-image: url(../images/homepage-hero.jpg);
+  background-position: center;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
