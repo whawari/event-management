@@ -28,13 +28,35 @@
 
                 <h1>Sign up</h1>
 
-                <form action="" class="form">
+                <form method="post" action="../includes/signup.php" class="form">
+                    <?php
+                    session_start();
+
+                    $errors = [];
+                    if (isset($_SESSION["signupErrors"])) {
+                        $errors = $_SESSION["signupErrors"];
+
+                        unset($_SESSION["signupErrors"]);
+                    }
+                    if (isset($_SESSION["signupData"])) {
+                        $data = $_SESSION["signupData"];
+
+                        unset($_SESSION["signupData"]);
+                    }
+                    ?>
+
                     <div class="form__field">
                         <label for="name" title="Required" class="form__field__label">
                             Name <span class="form__field__label__required">*</span>
                         </label>
 
-                        <input type="text" name="name" id="name" class="form__field__input">
+                        <input type="text" name="name" id="name" value="<?php echo isset($data["name"]) ? $data["name"]  : "" ?>" class="form__field__input<?php echo isset($errors["nameError"]) ? " form__field__input--danger" : "" ?>">
+
+                        <?php
+                        if (isset($errors["nameError"])) {
+                            echo "<span class='body2 form__field__info--danger'>" . $errors["nameError"] . "</span>";
+                        }
+                        ?>
                     </div>
 
                     <div class="form__field">
@@ -42,7 +64,13 @@
                             Email <span class="form__field__label__required">*</span>
                         </label>
 
-                        <input type="email" name="email" id="email" autocomplete="email" class="form__field__input">
+                        <input type="email" name="email" id="email" value="<?php echo isset($data["email"]) ? $data["email"]  : "" ?>" autocomplete="email" class="form__field__input<?php echo isset($errors["emailError"]) ? " form__field__input--danger" : "" ?>">
+
+                        <?php
+                        if (isset($errors["emailError"])) {
+                            echo "<span class='body2 form__field__info--danger'>" . $errors["emailError"] . "</span>";
+                        }
+                        ?>
                     </div>
 
                     <div class="form__field">
@@ -50,7 +78,13 @@
                             Password <span class="form__field__label__required">*</span>
                         </label>
 
-                        <input type="password" name="password" id="password" autocomplete="current-password" class="form__field__input">
+                        <input type="password" name="password" id="password" autocomplete="current-password" class="form__field__input<?php echo isset($errors["passwordError"]) ? " form__field__input--danger" : "" ?>">
+
+                        <?php
+                        if (isset($errors["passwordError"])) {
+                            echo "<span class='body2 form__field__info--danger'>" . $errors["passwordError"] . "</span>";
+                        }
+                        ?>
 
                         <span class="body2 form__field__info">Password must contain at least eight characters and include at least one digit</span>
                     </div>
@@ -60,8 +94,21 @@
                             Confirm password <span class="form__field__label__required">*</span>
                         </label>
 
-                        <input type="password" name="confirm-password" id="confirm-password" autocomplete="new-password" class="form__field__input">
+                        <input type="password" name="confirm-password" id="confirm-password" autocomplete="new-password" class="form__field__input<?php echo isset($errors["confirmPasswordError"]) ? " form__field__input--danger" : "" ?>">
+
+                        <?php
+                        if (isset($errors["confirmPasswordError"])) {
+                            echo "<span class='body2 form__field__info--danger'>" . $errors["confirmPasswordError"] . "</span>";
+                        }
+                        ?>
                     </div>
+
+                    <?php
+                    if (isset($errors["generalError"])) {
+                        echo "<p class='body2 text--danger form__error'>" . $errors["generalError"] . "</p>";
+                    }
+                    ?>
+
 
                     <button type="submit" class="button button--primary full-width form__button">Sign up</button>
                 </form>

@@ -22,10 +22,15 @@ html {
 
   --text-dark: var(--dark);
   --text-light: var(--white);
+  --text-success: var(--success);
+  --text-warning: var(--warning);
+  --text-danger: var(--danger);
 
   --input-border: var(--gray-lighter);
   --input-border-hover: var(--gray-dark);
   --input-border-focus: var(--accent);
+  --input-border-warning: var(--warning);
+  --input-border-danger: var(--danger);
 
   --button-primary-color: var(--white);
   --button-primary-bg: var(--primary);
@@ -36,6 +41,7 @@ html {
   --link-accent: var(--accent);
 
   --form-field-info: var(--gray-dark);
+  --form-field-info-danger: var(--danger);
 
   --header-bg-scroll: var(--dark);
   --header-burger-slice-bg: var(--white);
@@ -64,6 +70,18 @@ body,
 
 .text--light {
   color: var(--text-light);
+}
+
+.text--success {
+  color: var(--text-success);
+}
+
+.text--warning {
+  color: var(--text-warning);
+}
+
+.text--danger {
+  color: var(--text-danger);
 }
 
 .text--center {

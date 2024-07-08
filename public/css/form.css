@@ -16,8 +16,7 @@
   margin-top: 4px;
   display: block;
   border: 1px solid var(--input-border);
-  outline: none;
-  transition: border 0.3s;
+  transition: border-color 0.3s;
 }
 
 .form__field__input:hover {
@@ -26,11 +25,27 @@
 
 .form__field__input:focus-visible {
   border-color: var(--input-border-focus);
+  outline-color: var(--input-border-focus);
+}
+
+.form__field__input--danger,
+.form__field__input--danger:hover,
+.form__field__input--danger:focus-visible {
+  border-color: var(--input-border-danger);
+  outline-color: var(--input-border-danger);
 }
 
 .form__field__info {
   margin-top: 4px;
   color: var(--form-field-info);
+}
+
+.form__field__info--danger {
+  color: var(--form-field-info-danger);
+}
+
+.form__error {
+  margin-top: 16px;
 }
 
 .form__button {
