@@ -31,46 +31,6 @@
   height: 32px;
 }
 
-.form {
-  margin: 32px 0;
-}
-
-.form__field:not(:last-of-type) {
-  margin-bottom: 16px;
-}
-
-.form__label {
-  font-size: 14px;
-}
-
-.form__input {
-  width: 100%;
-  padding: 16px;
-  margin-top: 4px;
-  display: block;
-  border: 1px solid var(--input-border);
-  outline: none;
-  transition: border 0.3s;
-}
-
-.form__input:hover {
-  border-color: var(--input-border-hover);
-}
-
-.form__input:focus-visible {
-  border-color: var(--input-border-focus);
-}
-
-.form__field__info {
-  margin-top: 4px;
-  color: var(--form-field-info);
-}
-
-.form__button {
-  width: 100%;
-  margin-top: 32px;
-}
-
 .visual {
   min-height: 100vh;
   background-image: url(../images/signup-visual.jpg);

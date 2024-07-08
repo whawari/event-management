@@ -12,6 +12,7 @@
 
     <!-- Custom styles -->
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/form.css">
     <link rel="stylesheet" href="css/signup.css">
 
     <title>EventHub | Sign Up</title>
@@ -29,26 +30,40 @@
 
                 <form action="" class="form">
                     <div class="form__field">
-                        <label for="name" class="form__label">Name</label>
+                        <label for="name" title="Required" class="form__field__label">
+                            Name <span class="form__field__label__required">*</span>
+                        </label>
 
-                        <input type="text" name="name" id="name" class="form__input">
+                        <input type="text" name="name" id="name" class="form__field__input">
                     </div>
 
                     <div class="form__field">
-                        <label for="email" class="form__label">Email</label>
+                        <label for="email" title="Required" class="form__field__label">
+                            Email <span class="form__field__label__required">*</span>
+                        </label>
 
-                        <input type="email" name="email" id="email" autocomplete="email" class="form__input">
+                        <input type="email" name="email" id="email" autocomplete="email" class="form__field__input">
                     </div>
 
                     <div class="form__field">
-                        <label for="password" class="form__label">Password</label>
+                        <label for="password" title="Required" class="form__field__label">
+                            Password <span class="form__field__label__required">*</span>
+                        </label>
 
-                        <input type="password" name="password" id="password" autocomplete="current-password" class="form__input">
+                        <input type="password" name="password" id="password" autocomplete="current-password" class="form__field__input">
 
                         <span class="body2 form__field__info">Password must contain at least eight characters and include at least one digit</span>
                     </div>
 
-                    <button type="submit" class="button button--primary form__button">Sign up</button>
+                    <div class="form__field">
+                        <label for="confirm-password" title="Required" class="form__field__label">
+                            Confirm password <span class="form__field__label__required">*</span>
+                        </label>
+
+                        <input type="password" name="confirm-password" id="confirm-password" autocomplete="new-password" class="form__field__input">
+                    </div>
+
+                    <button type="submit" class="button button--primary full-width form__button">Sign up</button>
                 </form>
 
                 <p>

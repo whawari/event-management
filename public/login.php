@@ -12,6 +12,7 @@
 
     <!-- Custom styles -->
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/form.css">
     <link rel="stylesheet" href="css/login.css">
 
     <title>EventHub - Log In</title>
@@ -29,18 +30,18 @@
 
                 <form action="" class="form">
                     <div class="form__field">
-                        <label for="email" class="form__label">Email</label>
+                        <label for="email" class="form__field__label">Email</label>
 
-                        <input type="email" name="email" id="email" autocomplete="email" class="form__input">
+                        <input type="email" name="email" id="email" autocomplete="email" class="form__field__input">
                     </div>
 
                     <div class="form__field">
-                        <label for="password" class="form__label">Password</label>
+                        <label for="password" class="form__field__label">Password</label>
 
-                        <input type="password" name="password" id="password" autocomplete="current-password" class="form__input">
+                        <input type="password" name="password" id="password" autocomplete="current-password" class="form__field__input">
                     </div>
 
-                    <button type="submit" class="button button--primary form__button">Log in</button>
+                    <button type="submit" class="button button--primary full-width form__button">Log in</button>
                 </form>
 
                 <p>

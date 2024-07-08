@@ -16,6 +16,9 @@ html {
   --gray-lighter: #d7d7d7;
   --gray-light: #b1b1b1;
   --gray-dark: #717171;
+  --success: #198754;
+  --warning: #ffc107;
+  --danger: #dc3545;
 
   --text-dark: var(--dark);
   --text-light: var(--white);
@@ -41,6 +44,8 @@ html {
   --navigation-drawer-bg: var(--white);
   --navigation-drawer-close-slice-bg: var(--dark);
   --navigation-drawer-close-bg-hover: var(--black-alpha-8);
+
+  --form-field-label-required: var(--danger);
 }
 
 html,
@@ -144,6 +149,10 @@ label,
   font-size: 14px;
   line-height: 16px;
   letter-spacing: 0.001em;
+}
+
+.full-width {
+  width: 100%;
 }
 
 .button {
