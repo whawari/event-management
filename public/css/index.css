@@ -52,6 +52,10 @@ html {
   --navigation-drawer-close-bg-hover: var(--black-alpha-8);
 
   --form-field-label-required: var(--danger);
+
+  --snackbar-close-bg: var(--black-alpha-8);
+  --snackbar-close-slice-bg: var(--white);
+  --snackbar-bg-success: var(--success);
 }
 
 html,

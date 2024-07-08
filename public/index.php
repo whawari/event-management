@@ -13,14 +13,13 @@
     <!-- Custom styles -->
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/homepage.css">
+    <link rel="stylesheet" href="css/snackbar.css">
 
     <title>EventHub - Discover Events Around You</title>
 </head>
 
 <body>
-    <?php
-    include "../templates/header.php";
-    ?>
+    <?php include "../templates/header.php"; ?>
 
     <div class="hero">
         <h1 class="text--large text--light text--center">
@@ -31,6 +30,23 @@
 
         <a href="../public/events.php" class="button button--primary">Discover events</a>
     </div>
+
+    <?php
+    if (isset($_GET["signup"]) && $_GET["signup"] === "success") {
+        echo '
+        <div class="snackbar snackbar--success">
+            <p class="snackbar__text text--light body2">Signup success!</p>
+
+            <button type="button" class="snackbar__close">
+                <span class="snackbar__close__slice"></span>
+                <span class="snackbar__close__slice"></span>
+            </button>
+        </div>
+
+        <script src="js/snackbar-handler.js"></script>
+        ';
+    }
+    ?>
 </body>
 
 </html>
