@@ -6,7 +6,7 @@
 
 .login__container,
 .visual {
-  flex: 1;
+  width: 50%;
 }
 
 .login__container {
@@ -32,10 +32,13 @@
 }
 
 .visual {
-  min-height: 100vh;
+  height: 100vh;
   background-image: url(../images/login-visual.jpg);
   background-size: cover;
   background-position: center;
+  position: fixed;
+  top: 0;
+  right: 0;
 }
 
 .visual__img {
@@ -47,5 +50,9 @@
 @media screen and (max-width: 959px) {
   .visual {
     display: none;
+  }
+
+  .login__container {
+    flex: 1;
   }
 }
