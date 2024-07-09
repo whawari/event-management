@@ -32,7 +32,9 @@
     </div>
 
     <?php
-    if (isset($_GET["signup"]) && $_GET["signup"] === "success") {
+    session_start();
+
+    if (isset($_SESSION["message"]) && $_SESSION["message"] === "SIGNUP_SUCCESS") {
         echo '
         <div class="snackbar snackbar--success">
             <p class="snackbar__text text--light body2">Signup success!</p>
@@ -45,6 +47,8 @@
 
         <script src="js/snackbar-handler.js"></script>
         ';
+
+        unset($_SESSION["message"]);
     }
     ?>
 </body>

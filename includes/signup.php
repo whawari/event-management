@@ -57,10 +57,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 
+    session_start();
+
     if ($errors) {
         mysqli_close($connection);
 
-        session_start();
         $_SESSION['signupErrors'] = $errors;
         $_SESSION['signupData'] = [
             "name" => $name,
@@ -78,7 +79,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (!mysqli_query($connection, $createUserQuery)) {
         $errors["generalError"] = mysqli_error($connection);
 
-        session_start();
         $_SESSION['signupErrors'] = $errors;
 
         mysqli_close($connection);
@@ -90,7 +90,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     mysqli_close($connection);
 
-    header("Location: ../public?signup=success");
+    $_SESSION['message'] = "SIGNUP_SUCCESS";
+    header("Location: ../public");
 } else {
     header("Location: ../public");
     die();
