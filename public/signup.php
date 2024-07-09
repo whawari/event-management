@@ -38,6 +38,7 @@
 
                         unset($_SESSION["signupErrors"]);
                     }
+
                     if (isset($_SESSION["signupData"])) {
                         $data = $_SESSION["signupData"];
 
@@ -78,7 +79,7 @@
                             Password <span class="form__field__label__required">*</span>
                         </label>
 
-                        <input type="password" name="password" id="password" autocomplete="current-password" class="form__field__input<?php echo isset($errors["passwordError"]) ? " form__field__input--danger" : "" ?>">
+                        <input type="password" name="password" id="password" value="<?php echo isset($data["password"]) ? $data["password"]  : "" ?>" autocomplete="current-password" class="form__field__input<?php echo isset($errors["passwordError"]) ? " form__field__input--danger" : "" ?>">
 
                         <?php
                         if (isset($errors["passwordError"])) {
@@ -94,7 +95,7 @@
                             Confirm password <span class="form__field__label__required">*</span>
                         </label>
 
-                        <input type="password" name="confirm-password" id="confirm-password" autocomplete="new-password" class="form__field__input<?php echo isset($errors["confirmPasswordError"]) ? " form__field__input--danger" : "" ?>">
+                        <input type="password" name="confirm-password" id="confirm-password" value="<?php echo isset($data["confirmPassword"]) ? $data["confirmPassword"]  : "" ?>" autocomplete="new-password" class="form__field__input<?php echo isset($errors["confirmPasswordError"]) ? " form__field__input--danger" : "" ?>">
 
                         <?php
                         if (isset($errors["confirmPasswordError"])) {

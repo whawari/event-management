@@ -65,7 +65,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION['signupErrors'] = $errors;
         $_SESSION['signupData'] = [
             "name" => $name,
-            "email" => $email
+            "email" => $email,
+            "password" => $password,
+            "confirmPassword" => $confirmPassword,
         ];
 
         header("Location: ../public/signup.php");
