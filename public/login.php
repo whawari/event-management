@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+$errors = [];
+if (isset($_SESSION["loginErrors"])) {
+    $errors = $_SESSION["loginErrors"];
+
+    unset($_SESSION["loginErrors"]);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,18 +39,36 @@
 
                 <h1>Log in</h1>
 
-                <form action="" class="form">
+                <form method="post" action="../includes/login.php" class="form">
                     <div class="form__field">
                         <label for="email" class="form__field__label">Email</label>
 
-                        <input type="email" name="email" id="email" autocomplete="email" class="form__field__input">
+                        <input type="email" name="email" id="email" autocomplete="email" class="form__field__input<?php echo isset($errors["emailError"]) ? " form__field__input--danger" : "" ?>"">
+
+                        <?php
+                        if (isset($errors["emailError"])) {
+                            echo "<span class='body2 form__field__info--danger'>" . $errors["emailError"] . "</span>";
+                        }
+                        ?>
                     </div>
 
                     <div class="form__field">
                         <label for="password" class="form__field__label">Password</label>
 
-                        <input type="password" name="password" id="password" autocomplete="current-password" class="form__field__input">
+                        <input type="password" name="password" id="password" autocomplete="current-password" class="form__field__input<?php echo isset($errors["passwordError"]) ? " form__field__input--danger" : "" ?>"">
+
+                        <?php
+                        if (isset($errors["passwordError"])) {
+                            echo "<span class='body2 form__field__info--danger'>" . $errors["passwordError"] . "</span>";
+                        }
+                        ?>
                     </div>
+
+                    <?php
+                    if (isset($errors["generalError"])) {
+                        echo "<p class='body2 text--danger form__error'>" . $errors["generalError"] . "</p>";
+                    }
+                    ?>
 
                     <button type="submit" class="button button--primary full-width form__button">Log in</button>
                 </form>
