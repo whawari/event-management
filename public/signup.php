@@ -1,3 +1,20 @@
+<?php
+session_start();
+
+$errors = [];
+if (isset($_SESSION["signupErrors"])) {
+    $errors = $_SESSION["signupErrors"];
+
+    unset($_SESSION["signupErrors"]);
+}
+
+if (isset($_SESSION["signupData"])) {
+    $data = $_SESSION["signupData"];
+
+    unset($_SESSION["signupData"]);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,23 +46,6 @@
                 <h1>Sign up</h1>
 
                 <form method="post" action="../includes/signup.php" class="form">
-                    <?php
-                    session_start();
-
-                    $errors = [];
-                    if (isset($_SESSION["signupErrors"])) {
-                        $errors = $_SESSION["signupErrors"];
-
-                        unset($_SESSION["signupErrors"]);
-                    }
-
-                    if (isset($_SESSION["signupData"])) {
-                        $data = $_SESSION["signupData"];
-
-                        unset($_SESSION["signupData"]);
-                    }
-                    ?>
-
                     <div class="form__field">
                         <label for="name" title="Required" class="form__field__label">
                             Name <span class="form__field__label__required">*</span>
