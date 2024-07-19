@@ -75,6 +75,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die();
     }
 
+    require_once "../helpers/hashPassword.php";
+    $password = hashPassword($password);
+
     $createUserQuery = "INSERT INTO users (name, email, password)
     VALUES ('$name', '$email', '$password')";
 
@@ -90,9 +93,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die();
     }
 
+    $userId = mysqli_insert_id($connection);
+
     mysqli_close($connection);
 
-    $_SESSION['message'] = "SIGNUP_SUCCESS";
+    $_SESSION['logged'] = $userId;
+
     header("Location: ../public");
 } else {
     header("Location: ../public");

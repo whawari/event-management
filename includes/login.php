@@ -6,7 +6,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = sanitizeInput($_POST["email"]);
     $password = sanitizeInput($_POST["password"]);
 
-
     // error handling
     $errors = [];
 
@@ -28,13 +27,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die();
     }
 
-
     require_once "../config/db-connect.php";
     require_once "../helpers/getUser.php";
 
     $user = getUser($connection, $email);
 
     mysqli_close($connection);
+
+    require_once "../helpers/hashPassword.php";
+    $password = hashPassword($password);
 
     if ($user && $user["password"] === $password) {
         $_SESSION['logged'] = $user["id"];
