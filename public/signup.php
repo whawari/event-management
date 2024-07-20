@@ -1,5 +1,13 @@
 <?php
-session_start();
+if (!isset($_SESSION)) {
+    session_start();
+}
+
+if (isset($_SESSION["loggedUserId"])) {
+    header("location: ../public");
+
+    exit();
+}
 
 $errors = [];
 if (isset($_SESSION["signupErrors"])) {
@@ -13,6 +21,8 @@ if (isset($_SESSION["signupData"])) {
 
     unset($_SESSION["signupData"]);
 }
+
+require_once "../config/roles.php";
 ?>
 
 <!DOCTYPE html>
@@ -102,6 +112,30 @@ if (isset($_SESSION["signupData"])) {
                             echo "<span class='body2 form__field__info--danger'>" . $errors["confirmPasswordError"] . "</span>";
                         }
                         ?>
+                    </div>
+
+                    <p>Sign up as</p>
+
+                    <div class="form__radio-group form__radio-group--horizontal">
+                        <label class="form__radio-group__label">
+                            <span class="form__radio-group__radio" tabindex="0">
+                                <input type="radio" name="role" value="<?php echo $user; ?>" checked class="form__radio-group__radio__input">
+
+                                <span class="form__radio-group__radio__checked"></span>
+                            </span>
+
+                            <span><?php echo $user; ?></span>
+                        </label>
+
+                        <label class="form__radio-group__label">
+                            <span class="form__radio-group__radio" tabindex="0">
+                                <input type="radio" name="role" value="<?php echo $organizer; ?>" class="form__radio-group__radio__input">
+
+                                <span class="form__radio-group__radio__checked"></span>
+                            </span>
+
+                            <span><?php echo $organizer; ?></span>
+                        </label>
                     </div>
 
                     <?php

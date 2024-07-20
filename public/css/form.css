@@ -51,3 +51,73 @@
 .form__button {
   margin-top: 32px;
 }
+
+.form__radio-group {
+  margin-left: -12px;
+  display: flex;
+}
+
+.form__radio-group--horizontal {
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+}
+
+.form__radio-group__label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.form__radio-group__radio {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  position: relative;
+  outline: none;
+  transition: background-color 0.3s;
+}
+
+.form__radio-group__radio:hover,
+.form__radio-group__radio:focus-visible {
+  background-color: var(--form-radio-bg-hover);
+}
+
+.form__radio-group__radio::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--form-radio);
+  border-radius: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.form__radio-group__radio__input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  visibility: hidden;
+  z-index: -1;
+}
+
+.form__radio-group__radio__checked {
+  width: 12px;
+  height: 12px;
+  background-color: var(--form-radio);
+  border-radius: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.form__radio-group__radio__input:checked + .form__radio-group__radio__checked {
+  opacity: 1;
+}

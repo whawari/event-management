@@ -28,27 +28,35 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     require_once "../config/db-connect.php";
-    require_once "../helpers/getUser.php";
+    require_once "../helpers/getUserWithRoleAndPermissions.php";
 
-    $user = getUser($connection, $email);
+    $userDetails = getUserWithRoleAndPermissions($connection, $email, $password);
 
     mysqli_close($connection);
 
-    require_once "../helpers/hashPassword.php";
-    $password = hashPassword($password);
+    if ($userDetails) {
+        $_SESSION['loggedUserId'] = $userDetails["id"];
+        $_SESSION['loggedUserName'] = $userDetails["name"];
+        $_SESSION['loggedUserEmail'] = $userDetails["email"];
+        $_SESSION['loggedUserRole'] = $userDetails["role_code"];
+        $_SESSION['loggedUserPermissions'] = $userDetails["role_permissions"];
 
-    if ($user && $user["password"] === $password) {
-        $_SESSION['logged'] = $user["id"];
+        require_once "../config/roles.php";
 
-        header("Location: ../public");
+        if ($userDetails["role_code"] === $admin) {
+            header("Location: ../public/dashboard");
+        } else {
+            header("Location: ../public");
+        }
+
+        exit();
     } else {
-        $errors["generalError"] = "Invalid credentials";
+        $errors["generalError"] = "Invalid email or password";
 
         $_SESSION['loginErrors'] = $errors;
 
         header("Location: ../public/login.php");
-
-        die();
+        exit();
     }
 } else {
     header("Location: ../public");

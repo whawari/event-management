@@ -7,6 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = sanitizeInput($_POST["email"]);
     $password = sanitizeInput($_POST["password"]);
     $confirmPassword = sanitizeInput($_POST["confirm-password"]);
+    $role = sanitizeInput($_POST["role"]);
 
     require_once "../config/db-connect.php";
 
@@ -57,6 +58,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 
+    require_once "../config/roles.php";
+    if ($role !== $user && $role !== $organizer) {
+        $errors["generalError"] = "Unrecognized user role!";
+    }
+
     session_start();
 
     if ($errors) {
@@ -78,28 +84,50 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     require_once "../helpers/hashPassword.php";
     $password = hashPassword($password);
 
-    $createUserQuery = "INSERT INTO users (name, email, password)
-    VALUES ('$name', '$email', '$password')";
+    mysqli_autocommit($connection, FALSE);
 
-    if (!mysqli_query($connection, $createUserQuery)) {
-        $errors["generalError"] = mysqli_error($connection);
+    try {
+        $createUserQuery = "INSERT INTO users (name, email, password) 
+        VALUES ('$name', '$email', '$password')";
+
+        if (!mysqli_query($connection, $createUserQuery)) {
+            throw new Exception(mysqli_error($connection));
+        }
+
+        $userId = mysqli_insert_id($connection);
+
+        $assignRoleToUser = "INSERT INTO user_roles (user_id, role_code) 
+        VALUES ($userId, '$role');";
+
+        if (!mysqli_query($connection, $assignRoleToUser)) {
+            throw new Exception(mysqli_error($connection));
+        }
+
+        if (!mysqli_commit($connection)) {
+            throw new Exception("Commit transaction failed");
+        }
+
+        $_SESSION['loggedUserId'] = $userId;
+        $_SESSION['loggedUserRole'] = $role;
+
+        mysqli_autocommit($connection, TRUE);
+        mysqli_close($connection);
+
+        header("Location: ../public");
+        exit();
+    } catch (Exception $e) {
+        mysqli_rollback($connection);
+
+        $errors["generalError"] = $e->getMessage();
 
         $_SESSION['signupErrors'] = $errors;
 
+        mysqli_autocommit($connection, TRUE);
         mysqli_close($connection);
 
         header("Location: ../public/signup.php");
-
-        die();
+        exit();
     }
-
-    $userId = mysqli_insert_id($connection);
-
-    mysqli_close($connection);
-
-    $_SESSION['logged'] = $userId;
-
-    header("Location: ../public");
 } else {
     header("Location: ../public");
     die();

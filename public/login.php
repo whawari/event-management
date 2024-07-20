@@ -1,5 +1,13 @@
 <?php
-session_start();
+if (!isset($_SESSION)) {
+    session_start();
+}
+
+if (isset($_SESSION["loggedUserId"])) {
+    header("location: ../public");
+
+    exit();
+}
 
 $errors = [];
 if (isset($_SESSION["loginErrors"])) {
@@ -52,7 +60,7 @@ if (isset($_SESSION["loginErrors"])) {
                         ?>
                     </div>
 
-                    <div class="form__field">
+                    <div class=" form__field">
                         <label for="password" class="form__field__label">Password</label>
 
                         <input type="password" name="password" id="password" autocomplete="current-password" class="form__field__input<?php echo isset($errors["passwordError"]) ? " form__field__input--danger" : "" ?>"">
@@ -70,7 +78,7 @@ if (isset($_SESSION["loginErrors"])) {
                     }
                     ?>
 
-                    <button type="submit" class="button button--primary full-width form__button">Log in</button>
+                    <button type=" submit" class="button button--primary full-width form__button">Log in</button>
                 </form>
 
                 <p>

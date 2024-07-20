@@ -1,0 +1,3 @@
+CREATE TABLE IF NOT EXISTS permissions (
+    code VARCHAR(50) NOT NULL PRIMARY KEY
+);
