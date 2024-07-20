@@ -4,13 +4,19 @@ html {
 
 :root {
   --primary: #3f826d;
+  --primary-alpha-16: rgba(63, 130, 109, 0.16);
+  --primary-alpha-32: rgba(63, 130, 109, 0.32);
   --primary-dark: #2e6c5a;
   --secondary: #182825;
   --accent: #3083dc;
   --accent-dark: #1c5a9e;
   --white: #ffffff;
+  --anti-flash-white: #ebebeb;
+  --white-alpha-6: rgba(255, 255, 255, 0.06);
   --white-alpha-8: rgba(255, 255, 255, 0.08);
+  --white-alpha-20: rgba(255, 255, 255, 0.2);
   --black: #000000;
+  --rich-black: #141a21;
   --black-alpha-8: rgba(0, 0, 0, 0.08);
   --dark: #141414;
   --gray-lighter: #d7d7d7;
@@ -56,6 +62,20 @@ html {
   --snackbar-close-bg: var(--black-alpha-8);
   --snackbar-close-slice-bg: var(--white);
   --snackbar-bg-success: var(--success);
+
+  --sidebar-bg: var(--rich-black);
+  --sidebar-resize-button-bg: var(--white);
+  --sidebar-resize-button-bg-hover: var(--anti-flash-white);
+  --sidebar-nav-scrollbar-thumb-bg: var(--white-alpha-20);
+  --sidebar-nav-link: var(--gray-dark);
+  --sidebar-nav-link-active: var(--primary);
+  --sidebar-nav-link-bg-active: var(--primary-alpha-16);
+  --sidebar-nav-link-bg-hover: var(--white-alpha-6);
+  --sidebar-nav-link-bg-active-hover: var(--primary-alpha-32);
+  --toolbar-burger: var(--gray-dark);
+  --toolbar-burger-bg-hover: var(--black-alpha-8);
+  --sidebar-close-button: var(--gray-dark);
+  --sidebar-close-button-bg-hover: var(--white-alpha-8);
 }
 
 html,
