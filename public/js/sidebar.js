@@ -21,22 +21,24 @@ sidebarResizeButton.onclick = () => {
 
   if (isOpened) {
     sidebarResizeButton.setAttribute("data-toggle", "closed");
-
+    sidebarResizeButton.setAttribute("title", "Maximize");
+    
     sidebar.style.width = "88px";
-
+    
     sidebarWhitespace.forEach((element) => {
       element.style.width = "88px";
     });
-
+    
     sidebar.classList.add("sidebar--minimized");
-
+    
     sidebarResizeButtonImg.setAttribute(
       "src",
       "/event-management/public/images/icons/chevron-right.svg"
     );
   } else {
     sidebarResizeButton.setAttribute("data-toggle", "opened");
-
+    sidebarResizeButton.setAttribute("title", "Minimize");
+    
     sidebar.style.width = "300px";
 
     sidebarWhitespace.forEach((element) => {
