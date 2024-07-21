@@ -1,3 +1,9 @@
+<?php
+if (!isset($_SESSION)) {
+    session_start();
+}
+?>
+
 <link rel="stylesheet" href="../public/css/navigation-drawer.css">
 
 <div class="navigation-drawer navigation-drawer--close">
@@ -17,6 +23,10 @@
             <a href="../public/events.php" class="link link--dark">Events</a>
         </nav>
 
-        <a href="../public/login.php" class="button button--primary">Log in</a>
+        <?php
+        if (!isset($_SESSION["loggedUserId"])) {
+            echo '<a href="../public/login.php" class="button button--primary">Log in</a>';   
+        }
+        ?>
     </div>
 </div>
