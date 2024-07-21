@@ -3,6 +3,7 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
+require_once "../config/roles.php";
 require_once "../config/permissions.php";
 require_once "../helpers/hasPermission.php";
 ?>
@@ -23,7 +24,7 @@ require_once "../helpers/hasPermission.php";
 
         <?php
         if (isset($_SESSION["loggedUserId"])) {
-            if (hasPermission($createEvent)) {
+            if (hasPermission($createEvent) && $_SESSION["loggedUserRole"] === $organizer) {
                 echo '<a href="../public/events/create-event.php" class="button button--primary header__cta">Create event</a>';
             }
         } else {
