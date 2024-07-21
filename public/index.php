@@ -1,3 +1,9 @@
+<?php
+if (!isset($_SESSION)) {
+    session_start();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +19,6 @@
     <!-- Custom styles -->
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/homepage.css">
-    <link rel="stylesheet" href="css/snackbar.css">
 
     <title>EventHub - Discover Events Around You</title>
 </head>
@@ -30,6 +35,12 @@
 
         <a href="../public/events.php" class="button button--primary">Discover events</a>
     </div>
+
+    <?php
+    if (isset($_SESSION["loggedUserId"])) {
+        include "../templates/dashboard-floating-button.php";
+    }
+    ?>
 </body>
 
 </html>

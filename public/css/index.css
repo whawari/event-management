@@ -78,6 +78,10 @@ html {
   --toolbar-burger-bg-hover: var(--black-alpha-8);
   --sidebar-close-button: var(--gray-dark);
   --sidebar-close-button-bg-hover: var(--white-alpha-8);
+
+  --floating-button-bg: var(--primary);
+  --floating-button-box-shadow-1: var(--primary-alpha-32);
+  --floating-button-box-shadow-2: var(--primary-alpha-16);
 }
 
 html,
