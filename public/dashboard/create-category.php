@@ -62,6 +62,26 @@ if (isset($_SESSION["data"])) {
         <div class="sidebar-whitespace"></div>
 
         <main class="panel__content">
+            <div class="panel__content__head">
+                <div class="panel__content__head__container">
+                    <h4>Create a new category</h4>
+
+                    <nav class="breadcrumbs">
+                        <a href="../dashboard" class="link link--dark breadcrumbs__link">Dashboard</a>
+
+                        <span class="breadcrumbs__separator"></span>
+
+                        <a href="categories.php" class="link link--dark breadcrumbs__link">Categories</a>
+
+                        <span class="breadcrumbs__separator"></span>
+
+                        <span class="breadcrumbs__active">New category</span>
+                    </nav>
+                </div>
+
+                <div class="panel__content__head__container"></div>
+            </div>
+
             <div class="card">
                 <form action="../../includes/createCategory.php" method="post" enctype="multipart/form-data" class="form">
                     <div class="form__field">

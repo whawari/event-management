@@ -47,7 +47,21 @@ if (!isset($_SESSION["loggedUserId"])) {
         <div class="sidebar-whitespace"></div>
 
         <main class="panel__content">
-            <a href="create-category.php" class="button button--primary header__cta">Create category</a>
+            <div class="panel__content__head">
+                <div class="panel__content__head__container">
+                    <h4>Categories</h4>
+
+                    <nav class="breadcrumbs">
+                        <a href="../dashboard" class="link link--dark breadcrumbs__link">Dashboard</a>
+
+                        <span class="breadcrumbs__separator"></span>
+
+                        <span class="breadcrumbs__active">Categories</span>
+                    </nav>
+                </div>
+
+                <a href="create-category.php" class="button button--primary panel__content__head__cta">New category</a>
+            </div>
         </main>
     </div>
 

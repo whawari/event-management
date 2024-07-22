@@ -90,6 +90,9 @@ html {
   --icon-button-bg-hover: var(--white-alpha-8);
   --icon-button-icon: var(--gray-dark);
   --icon-button-bg-hover-dark: var(--black-alpha-8);
+
+  --breadcrumbs-separator-bg: var(--gray-dark);
+  --breadcrumbs-active: var(--gray);
 }
 
 html,
@@ -213,15 +216,15 @@ label,
 }
 
 .button {
-  font-weight: 700;
+  font-weight: 600;
   font-size: 14px;
   line-height: 16px;
   letter-spacing: 0.0125em;
-  text-transform: uppercase;
   padding: 16px 40px;
   border: unset;
   cursor: pointer;
   transition: background-color 0.3s;
+  text-align: center;
 }
 
 .button--primary {
@@ -328,6 +331,50 @@ label,
   border-radius: 16px;
   box-shadow: rgba(145, 158, 171, 0.2) 0px 0px 2px 0px,
     rgba(145, 158, 171, 0.12) 0px 12px 24px -4px;
+}
+
+.panel__content__head,
+.panel__content__head__container {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.panel__content__head {
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.panel__content__head__container {
+  flex-direction: column;
+}
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.breadcrumbs__link,
+.breadcrumbs__active {
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.04em;
+}
+
+.breadcrumbs__separator {
+  width: 4px;
+  height: 4px;
+  border-radius: 100%;
+  background-color: var(--breadcrumbs-separator-bg);
+}
+
+.breadcrumbs__active {
+  color: var(--breadcrumbs-active);
+}
+
+.panel__content__head__cta {
+  padding: 12px 6px;
 }
 
 @media screen and (max-width: 959px) {
