@@ -10,7 +10,7 @@ $dropRolePermissionsTable = "DROP TABLE IF EXISTS role_permissions;";
 if (mysqli_query($connection, $dropRolePermissionsTable)) {
     echo "Table 'role_permissions' dropped <br>";
 } else {
-    echo "Error creating 'role_permissions' table: " . mysqli_error($connection) . "<br>";
+    echo "Error dropping 'role_permissions' table: " . mysqli_error($connection) . "<br>";
 }
 
 // ----------------------------------------------------------------------
@@ -21,7 +21,7 @@ $dropUserRolesTable = "DROP TABLE IF EXISTS user_roles;";
 if (mysqli_query($connection, $dropUserRolesTable)) {
     echo "Table 'user_roles' dropped <br>";
 } else {
-    echo "Error creating 'user_roles' table: " . mysqli_error($connection) . "<br>";
+    echo "Error dropping 'user_roles' table: " . mysqli_error($connection) . "<br>";
 }
 
 // ----------------------------------------------------------------------
@@ -32,7 +32,7 @@ $dropPermissionsTable = "DROP TABLE IF EXISTS permissions;";
 if (mysqli_query($connection, $dropPermissionsTable)) {
     echo "Table 'permissions' dropped <br>";
 } else {
-    echo "Error creating 'permissions' table: " . mysqli_error($connection) . "<br>";
+    echo "Error dropping 'permissions' table: " . mysqli_error($connection) . "<br>";
 }
 
 // ----------------------------------------------------------------------
@@ -54,7 +54,29 @@ $dropUsersTable = "DROP TABLE IF EXISTS users;";
 if (mysqli_query($connection, $dropUsersTable)) {
     echo "Table 'users' dropped <br>";
 } else {
-    echo "Error creating 'users' table: " . mysqli_error($connection) . "<br>";
+    echo "Error dropping 'users' table: " . mysqli_error($connection) . "<br>";
+}
+
+// ----------------------------------------------------------------------
+// Drop category_images table
+echo "Dropping 'category_images' table <br>";
+$dropCategoryImagesTable = "DROP TABLE IF EXISTS category_images;";
+
+if (mysqli_query($connection, $dropCategoryImagesTable)) {
+    echo "Table 'category_images' dropped <br>";
+} else {
+    echo "Error dropping 'category_images' table: " . mysqli_error($connection) . "<br>";
+}
+
+// ----------------------------------------------------------------------
+// Drop categories table
+echo "Dropping 'categories' table <br>";
+$dropCategoriesTable = "DROP TABLE IF EXISTS categories;";
+
+if (mysqli_query($connection, $dropCategoriesTable)) {
+    echo "Table 'categories' dropped <br>";
+} else {
+    echo "Error dropping 'categories' table: " . mysqli_error($connection) . "<br>";
 }
 
 // ----------------------------------------------------------------------
@@ -115,6 +137,30 @@ if (mysqli_query($connection, $createUserRolesTableQuery)) {
     echo "Table 'user_roles' created successfully <br>";
 } else {
     echo "Error creating 'user_roles' table: " . mysqli_error($connection) . "<br>";
+}
+
+// ----------------------------------------------------------------------
+// Create categories table
+echo "Creating 'categories' table <br>";
+$categoriesSqlFilePath = 'events/categories.sql';
+$createCategoriesTableQuery = file_get_contents($categoriesSqlFilePath);
+
+if (mysqli_query($connection, $createCategoriesTableQuery)) {
+    echo "Table 'categories' created successfully <br>";
+} else {
+    echo "Error creating 'categories' table: " . mysqli_error($connection) . "<br>";
+}
+
+// ----------------------------------------------------------------------
+// Create category_images table
+echo "Creating 'category_images' table <br>";
+$categoryImagesSqlFilePath = 'events/categoryImages.sql';
+$createCategoryImagesTableQuery = file_get_contents($categoryImagesSqlFilePath);
+
+if (mysqli_query($connection, $createCategoryImagesTableQuery)) {
+    echo "Table 'category_images' created successfully <br>";
+} else {
+    echo "Error creating 'category_images' table: " . mysqli_error($connection) . "<br>";
 }
 
 mysqli_close($connection);
