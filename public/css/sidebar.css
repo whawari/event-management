@@ -8,6 +8,8 @@
   background-color: var(--rich-black);
   transition: width 0.3s, left 0.3s;
   z-index: 99;
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebar__header {
@@ -44,6 +46,7 @@
 }
 
 .sidebar__nav {
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -93,6 +96,7 @@
 }
 
 .sidebar__nav__link__icon {
+  display: inline-block;
   width: 24px;
   height: 24px;
 }
@@ -101,6 +105,14 @@
   height: 80px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.toolbar__box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .toolbar__logo {
@@ -110,7 +122,6 @@
 .toolbar__burger {
   background-color: unset;
   margin-left: -8px;
-  margin-right: 8px;
   color: var(--toolbar-burger);
 }
 
@@ -127,6 +138,29 @@
 
 .panel {
   display: flex;
+}
+
+.sidebar__footer {
+  padding: 0 16px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar__footer__logout {
+  color: var(--sidebar-logout);
+  background-color: var(--sidebar-logout-bg);
+  width: 100%;
+  padding: 16px 0;
+  display: flex;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.sidebar__footer__logout:hover,
+.sidebar__footer__logout:focus-visible {
+  background-color: var(--sidebar-logout-bg-hover);
 }
 
 @media screen and (max-width: 768px) {
@@ -183,7 +217,8 @@
     justify-content: center;
   }
 
-  .sidebar--minimized .sidebar__nav__link__title {
+  .sidebar--minimized .sidebar__nav__link__title,
+  .sidebar--minimized .sidebar__footer__logout {
     font-size: 10px;
     line-height: 16px;
   }
@@ -205,5 +240,9 @@
   .sidebar-whitespace {
     width: 300px;
     transition: width 0.3s;
+  }
+ 
+  .sidebar--minimized .sidebar__footer {
+    padding: 0 4px;
   }
 }
