@@ -22,32 +22,8 @@
   gap: 16px;
 }
 
-.header__burger {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  width: 48px;
-  height: 48px;
-  cursor: pointer;
-  border-radius: 100%;
-  border: none;
-  background-color: unset;
-  transition: background-color 0.3s;
-  margin-right: -16px;
-}
-
-.header__burger:hover,
-.header__burger:focus-visible {
-  background-color: var(--header-burger-bg-hover);
-}
-
-.header__burger__slice {
-  width: 20px;
-  height: 2px;
-  border-radius: 3px;
-  background-color: var(--header-burger-slice-bg);
+.header__burger > i {
+  color: var(--header-burger-icon);
 }
 
 @media screen and (max-width: 768px) {

@@ -3,6 +3,8 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
+$rootDirectory = $_SERVER['DOCUMENT_ROOT'];
+
 require_once "../config/roles.php";
 require_once "../config/permissions.php";
 require_once "../helpers/hasPermission.php";
@@ -32,10 +34,10 @@ require_once "../helpers/hasPermission.php";
         }
         ?>
 
-        <button type="button" class="header__burger">
-            <span class="header__burger__slice"></span>
-            <span class="header__burger__slice"></span>
-            <span class="header__burger__slice"></span>
+        <button type="button" class="icon-button icon-button--mr-minus8 header__burger">
+            <i class="icon-button__icon">
+                <?php echo file_get_contents($rootDirectory . "/event-management/public/images/icons/burger.svg") ?>
+            </i>
         </button>
     </div>
 

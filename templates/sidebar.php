@@ -12,12 +12,14 @@ require_once $rootDirectory . "/event-management/helpers/hasPermission.php";
             <img src="/event-management/public/images/logo.svg" alt="logo" class="sidebar__header__logo">
         </a>
 
-        <button type="button" class="sidebar__header__close">
-            <?php echo file_get_contents($rootDirectory . "/event-management/public/images/icons/close.svg") ?>
+        <button type="button" class="icon-button icon-button--mr-minus8 sidebar__header__close">
+            <i class="icon-button__icon">
+                <?php echo file_get_contents($rootDirectory . "/event-management/public/images/icons/close.svg") ?>
+            </i>
         </button>
 
-        <button type="button" class="sidebar__header__resize" data-toggle="opened" title="Minimize">
-            <img src="/event-management/public/images/icons/chevron-left.svg" alt="chevron left" width="20px">
+        <button type="button" class="icon-button sidebar__header__resize" data-toggle="opened" title="Minimize">
+            <img src="/event-management/public/images/icons/chevron-left.svg" alt="chevron left" class="icon-button__icon">
         </button>
     </div>
 
@@ -63,8 +65,10 @@ require_once $rootDirectory . "/event-management/helpers/hasPermission.php";
 
     <header class="toolbar">
         <div class="toolbar__box">
-            <button type="button" class="toolbar__burger">
-                <?php echo file_get_contents($rootDirectory . "/event-management/public/images/icons/burger.svg") ?>
+            <button type="button" class="icon-button icon-button--ml-minus8 icon-button--dark toolbar__burger">
+                <i class="icon-button__icon">
+                    <?php echo file_get_contents($rootDirectory . "/event-management/public/images/icons/burger.svg") ?>
+                </i>
             </button>
 
             <a href="/event-management/public">
