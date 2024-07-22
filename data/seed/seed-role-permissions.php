@@ -4,6 +4,8 @@ require_once "../../config/db-connect.php";
 require_once "../../config/roles.php";
 require_once "../../config/permissions.php";
 
+// ----------------------------------------------------------------------
+
 // Creating user role permissions
 // ------------------------------
 // User can view event
@@ -71,6 +73,35 @@ if (mysqli_query($connection, $query)) {
     echo "Permission '$deleteEvent' added to role '$admin' <br>";
 } else {
     echo "Error adding permission '$deleteEvent' to role '$admin': " . mysqli_error($connection) . "<br>";
+}
+
+// admin can view, create, edit, and delete category
+$query = "INSERT INTO role_permissions (role_code, permission_code) VALUES ('$admin', '$viewCategory');";
+if (mysqli_query($connection, $query)) {
+    echo "Permission '$viewCategory' added to role '$admin' <br>";
+} else {
+    echo "Error adding permission '$viewCategory' to role '$admin': " . mysqli_error($connection) . "<br>";
+}
+
+$query = "INSERT INTO role_permissions (role_code, permission_code) VALUES ('$admin', '$createCategory');";
+if (mysqli_query($connection, $query)) {
+    echo "Permission '$createCategory' added to role '$admin' <br>";
+} else {
+    echo "Error adding permission '$createCategory' to role '$admin': " . mysqli_error($connection) . "<br>";
+}
+
+$query = "INSERT INTO role_permissions (role_code, permission_code) VALUES ('$admin', '$editCategory');";
+if (mysqli_query($connection, $query)) {
+    echo "Permission '$editCategory' added to role '$admin' <br>";
+} else {
+    echo "Error adding permission '$editCategory' to role '$admin': " . mysqli_error($connection) . "<br>";
+}
+
+$query = "INSERT INTO role_permissions (role_code, permission_code) VALUES ('$admin', '$deleteCategory');";
+if (mysqli_query($connection, $query)) {
+    echo "Permission '$deleteCategory' added to role '$admin' <br>";
+} else {
+    echo "Error adding permission '$deleteCategory' to role '$admin': " . mysqli_error($connection) . "<br>";
 }
 
 mysqli_close($connection);
