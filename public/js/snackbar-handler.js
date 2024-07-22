@@ -3,7 +3,7 @@ const snackbarCloseButton = document.querySelector(".snackbar__close");
 
 if (snackbar) {
   snackbar.style.visibility = "visible";
-  snackbar.style.left = "24px";
+  snackbar.style.right = "24px";
 
   setTimeout(() => {
     hideSnackbar();
@@ -12,7 +12,7 @@ if (snackbar) {
 
 const hideSnackbar = () => {
   if (snackbar) {
-    snackbar.style.left = "-100%";
+    snackbar.style.right = "-100%";
 
     setTimeout(() => {
       snackbar.style.visibility = "hidden";

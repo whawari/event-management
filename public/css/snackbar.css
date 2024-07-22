@@ -1,14 +1,14 @@
 .snackbar {
   position: fixed;
   bottom: 24px;
-  left: -100%;
+  right: -100%;
   display: flex;
   align-items: center;
   gap: 16px;
   justify-content: space-between;
   max-width: 300px;
-  z-index: 98;
-  transition: left 0.5s;
+  z-index: 101;
+  transition: right 0.5s;
   visibility: hidden;
 }
 
