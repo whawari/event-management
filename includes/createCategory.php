@@ -82,8 +82,8 @@ try {
 
     $lastInsertedId = mysqli_insert_id($connection);
 
-    $query = "INSERT INTO category_images (category_id, image_path) 
-        VALUES ($lastInsertedId, '$imagePath');";
+    $query = "INSERT INTO category_images (category_id, name) 
+        VALUES ($lastInsertedId, '$fileName');";
 
     if (!mysqli_query($connection, $query)) {
         unlink($imagePath);
