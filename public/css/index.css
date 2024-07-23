@@ -375,6 +375,7 @@ label,
 
 .panel__content__head__cta {
   padding: 12px 6px;
+  border-radius: 8px;
 }
 
 @media screen and (max-width: 959px) {
