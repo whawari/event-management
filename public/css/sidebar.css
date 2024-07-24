@@ -111,6 +111,7 @@
 
 .panel__content {
   padding: 16px 24px;
+  flex: 1;
 }
 
 .panel {
