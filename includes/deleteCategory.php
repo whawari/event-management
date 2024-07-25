@@ -33,7 +33,7 @@ $category = getCategoryById($connection, $categoryId);
 
 if (isset($category["error"])) {
     header('HTTP/1.1 404 Not Found');
-    echo mysqli_error($connection);
+    echo $category["error"];
     mysqli_close($connection);
     exit();
 }
