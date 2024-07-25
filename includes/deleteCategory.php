@@ -31,7 +31,7 @@ require_once "../helpers/getCategoryById.php";
 
 $category = getCategoryById($connection, $categoryId);
 
-if ($category["error"]) {
+if (isset($category["error"])) {
     header('HTTP/1.1 404 Not Found');
     echo mysqli_error($connection);
     mysqli_close($connection);
