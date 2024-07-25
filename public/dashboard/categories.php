@@ -85,12 +85,15 @@ if (!isset($_SESSION["loggedUserId"])) {
     <script type="text/javascript">
         $(document).ready(function() {
             $('#feedback').hide();
+
             fetchCategories();
+
+            $(document).on("click", ".delete-button", function() {
+                deleteCategory($(this).attr("data-id"));
+            })
         });
 
         function fetchCategories() {
-            $('#spinner').show();
-
             $.ajax({
                 url: "../../includes/viewCategories.php",
                 method: "GET",
@@ -107,6 +110,20 @@ if (!isset($_SESSION["loggedUserId"])) {
                 },
                 complete: function() {
                     $('#spinner').hide();
+                }
+            });
+        }
+
+        function deleteCategory($categoryId) {
+            $.ajax({
+                url: "../../includes/deleteCategory.php",
+                method: "GET",
+                data: {
+                    action: "deleteCategory",
+                    categoryId: $categoryId
+                },
+                success: function(data) {
+                    fetchCategories();
                 }
             });
         }

@@ -39,7 +39,7 @@ if (isset($_GET["action"]) && $_GET["action"] == "fetchCategories") {
                                     <i class='icon-button__icon'>$editIcon</i>
                                 </a>
     
-                                <button type='button' class='icon-button icon-button--danger icon-button--mr-minus8' title='Delete' data-id='$categoryId'>
+                                <button type='button' class='icon-button icon-button--danger icon-button--mr-minus8 delete-button' title='Delete' data-id='$categoryId'>
                                     <i class='icon-button__icon'>$deleteIcon</i>
                                 </button>
                             </div>
