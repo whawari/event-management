@@ -28,6 +28,7 @@ html {
   --success: #198754;
   --warning: #ffc107;
   --danger: #dc3545;
+  --danger-alpha-8: rgba(220, 53, 69, 0.08);
 
   --text-dark: var(--dark);
   --text-light: var(--white);
@@ -90,9 +91,13 @@ html {
   --icon-button-bg-hover: var(--white-alpha-8);
   --icon-button-icon: var(--gray-dark);
   --icon-button-bg-hover-dark: var(--black-alpha-8);
+  --icon-button-icon-danger: var(--danger);
+  --icon-button-bg-hover-danger: var(--danger-alpha-8);
 
   --breadcrumbs-separator-bg: var(--gray-dark);
   --breadcrumbs-active: var(--gray);
+
+  --spinner: var(--gray);
 }
 
 html,
@@ -311,6 +316,15 @@ label,
   background-color: var(--icon-button-bg-hover-dark);
 }
 
+.icon-button--danger > .icon-button__icon {
+  color: var(--icon-button-icon-danger);
+}
+
+.icon-button--danger:hover,
+.icon-button--danger:focus-visible {
+  background-color: var(--icon-button-bg-hover-danger);
+}
+
 .icon-button--ml-minus8 {
   margin-left: -8px;
 }
@@ -376,6 +390,23 @@ label,
 .panel__content__head__cta {
   padding: 12px 6px;
   border-radius: 8px;
+}
+
+.spinner {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  color: var(--spinner);
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @media screen and (max-width: 959px) {

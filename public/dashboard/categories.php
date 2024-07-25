@@ -36,6 +36,10 @@ if (!isset($_SESSION["loggedUserId"])) {
     <!-- Custom styles -->
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/sidebar.css">
+    <link rel="stylesheet" href="../css/categories.css">
+
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -62,10 +66,51 @@ if (!isset($_SESSION["loggedUserId"])) {
 
                 <a href="create-category.php" class="button button--primary panel__content__head__cta">New category</a>
             </div>
+
+            <div class="panel__content__body">
+                <div id="categories"></div>
+
+                <div class="panel__content__body__box">
+                    <i class="spinner" id="spinner">
+                        <?php echo file_get_contents($rootDirectory . "/event-management/public/images/icons/spinner.svg") ?>
+                    </i>
+
+                    <p class="text--danger" id="feedback"></p>
+                </div>
+            </div>
         </main>
     </div>
 
     <script src="/event-management/public/js/sidebar.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#feedback').hide();
+            fetchCategories();
+        });
+
+        function fetchCategories() {
+            $('#spinner').show();
+
+            $.ajax({
+                url: "../../includes/viewCategories.php",
+                method: "GET",
+                data: {
+                    action: "fetch"
+                },
+                success: function(data) {
+                    $('#categories').html(data);
+                },
+                error: function(xhr) {
+                    $('#feedback').show();
+
+                    $('#feedback').html(xhr.responseText);
+                },
+                complete: function() {
+                    $('#spinner').hide();
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>
