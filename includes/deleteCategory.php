@@ -27,22 +27,16 @@ if (empty($_GET["categoryId"])) {
 $categoryId = $_GET["categoryId"];
 
 require_once "../config/db-connect.php";
+require_once "../helpers/getCategoryById.php";
 
-$query = "SELECT categories.id, category_images.name AS image_name
-FROM categories
-INNER JOIN category_images ON categories.id = category_images.category_id
-WHERE categories.id=$categoryId;";
+$category = getCategoryById($connection, $categoryId);
 
-$result = mysqli_query($connection, $query);
-
-if (!$result) {
+if ($category["error"]) {
     header('HTTP/1.1 404 Not Found');
     echo mysqli_error($connection);
     mysqli_close($connection);
     exit();
 }
-
-$category = mysqli_fetch_assoc($result);
 
 mysqli_autocommit($connection, FALSE);
 
