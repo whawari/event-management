@@ -65,6 +65,10 @@ try {
     $uploadsFolderDirectory = "/event-management/public/images/uploads/";
 
     unlink($rootDirectory . $uploadsFolderDirectory . $imageName);
+
+    if (!mysqli_commit($connection)) {
+        throw new Exception("Commit transaction failed");
+    }
 } catch (Exception $e) {
     mysqli_rollback($connection);
 
