@@ -95,7 +95,7 @@ if (!isset($_SESSION["loggedUserId"])) {
                 url: "../../includes/viewCategories.php",
                 method: "GET",
                 data: {
-                    action: "fetch"
+                    action: "fetchCategories"
                 },
                 success: function(data) {
                     $('#categories').html(data);
