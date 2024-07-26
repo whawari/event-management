@@ -196,8 +196,10 @@ if (isset($_SESSION["data"])) {
                                 $categories = getCategories($connection);
                                 mysqli_close($connection);
 
-                                foreach ($categories as $category) {
-                                    echo "<option value='" . $category['id'] . "'>" . $category['name'] . "</option>";
+                                if (!isset($categories["error"])) {
+                                    foreach ($categories as $category) {
+                                        echo "<option value='" . $category['id'] . "'>" . $category['name'] . "</option>";
+                                    }
                                 }
                                 ?>
                             </select>
