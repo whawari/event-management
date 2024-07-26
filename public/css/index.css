@@ -50,6 +50,11 @@ html {
   --form-field-file-outline: var(--accent);
   --form-field-file-img-bg: var(--gray-lighter);
   --form-field-file-border-danger: var(--danger);
+  --form-field-select-border: var(--gray-light);
+  --form-field-select-border-hover: var(--gray-dark);
+  --form-field-select-border-danger: var(--danger);
+  --form-field-select-arrow-bg: var(--gray);
+  --form-field-select-outline: var(--accent);
 
   --form-radio: var(--primary);
   --form-radio-bg-hover: var(--primary-alpha-16);
@@ -209,7 +214,8 @@ h5 {
 
 label,
 .form__field__label,
-.subtitle {
+.subtitle,
+.form__field__select {
   font-weight: 500;
   font-size: 14px;
   line-height: 16px;

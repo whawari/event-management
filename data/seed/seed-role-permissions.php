@@ -20,7 +20,7 @@ if (mysqli_query($connection, $query)) {
 
 // Creating organizer role permissions
 // -----------------------------------
-// organizer can view, create, and edit event
+// organizer can view, create, edit, and delete event
 $query = "INSERT INTO role_permissions (role_code, permission_code) VALUES ('$organizer', '$viewEvent');";
 if (mysqli_query($connection, $query)) {
     echo "Permission '$viewEvent' added to role '$organizer' <br>";
@@ -40,6 +40,13 @@ if (mysqli_query($connection, $query)) {
     echo "Permission '$editEvent' added to role '$organizer' <br>";
 } else {
     echo "Error adding permission '$editEvent' to role '$organizer': " . mysqli_error($connection) . "<br>";
+}
+
+$query = "INSERT INTO role_permissions (role_code, permission_code) VALUES ('$organizer', '$deleteEvent');";
+if (mysqli_query($connection, $query)) {
+    echo "Permission '$deleteEvent' added to role '$organizer' <br>";
+} else {
+    echo "Error adding permission '$deleteEvent' to role '$organizer': " . mysqli_error($connection) . "<br>";
 }
 
 // ----------------------------------------------------------------------

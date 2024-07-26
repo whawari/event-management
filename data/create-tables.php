@@ -80,6 +80,28 @@ if (mysqli_query($connection, $dropCategoriesTable)) {
 }
 
 // ----------------------------------------------------------------------
+// Drop event_images table
+echo "Dropping 'event_images' table <br>";
+$dropEventImagesTable = "DROP TABLE IF EXISTS event_images;";
+
+if (mysqli_query($connection, $dropEventImagesTable)) {
+    echo "Table 'event_images' dropped <br>";
+} else {
+    echo "Error dropping 'event_images' table: " . mysqli_error($connection) . "<br>";
+}
+
+// ----------------------------------------------------------------------
+// Drop events table
+echo "Dropping 'events' table <br>";
+$dropEventsTable = "DROP TABLE IF EXISTS events;";
+
+if (mysqli_query($connection, $dropEventsTable)) {
+    echo "Table 'events' dropped <br>";
+} else {
+    echo "Error dropping 'events' table: " . mysqli_error($connection) . "<br>";
+}
+
+// ----------------------------------------------------------------------
 // Create roles table
 echo "Creating 'roles' table <br>";
 $rolesSqlFilePath = 'users/roles.sql';
@@ -161,6 +183,30 @@ if (mysqli_query($connection, $createCategoryImagesTableQuery)) {
     echo "Table 'category_images' created successfully <br>";
 } else {
     echo "Error creating 'category_images' table: " . mysqli_error($connection) . "<br>";
+}
+
+// ----------------------------------------------------------------------
+// Create events table
+echo "Creating 'events' table <br>";
+$eventsSqlFilePath = 'events/events.sql';
+$createEventsTableQuery = file_get_contents($eventsSqlFilePath);
+
+if (mysqli_query($connection, $createEventsTableQuery)) {
+    echo "Table 'events' created successfully <br>";
+} else {
+    echo "Error creating 'events' table: " . mysqli_error($connection) . "<br>";
+}
+
+// ----------------------------------------------------------------------
+// Create event_images table
+echo "Creating 'event_images' table <br>";
+$eventImagesSqlFilePath = 'events/eventImages.sql';
+$createEventImagesTableQuery = file_get_contents($eventImagesSqlFilePath);
+
+if (mysqli_query($connection, $createEventImagesTableQuery)) {
+    echo "Table 'event_images' created successfully <br>";
+} else {
+    echo "Error creating 'event_images' table: " . mysqli_error($connection) . "<br>";
 }
 
 mysqli_close($connection);

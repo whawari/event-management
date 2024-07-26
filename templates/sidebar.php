@@ -51,6 +51,24 @@ require_once $rootDirectory . "/event-management/helpers/hasPermission.php";
             </a>';
         }
         ?>
+
+        <?php
+        if (hasPermission($viewEvent)) {
+            echo '<a href="/event-management/public/dashboard/events.php" class="sidebar__nav__link';
+            if ($current_page === 'events.php' || $current_page === 'create-event.php' || $current_page === 'edit-event.php') {
+                echo ' sidebar__nav__link--active';
+            }
+
+            echo '"><i class="sidebar__nav__link__icon">
+                    ' . file_get_contents($rootDirectory . "/event-management/public/images/icons/events.svg") . '
+                </i>
+
+                <span class="sidebar__nav__link__title">
+                    Events
+                </span>
+            </a>';
+        }
+        ?>
     </nav>
 
     <div class="sidebar__footer">
