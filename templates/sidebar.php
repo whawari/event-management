@@ -37,7 +37,7 @@ require_once $rootDirectory . "/event-management/helpers/hasPermission.php";
         <?php
         if (hasPermission($viewCategory)) {
             echo '<a href="/event-management/public/dashboard/categories.php" class="sidebar__nav__link';
-            if ($current_page === 'categories.php' || $current_page === 'create-category.php') {
+            if ($current_page === 'categories.php' || $current_page === 'create-category.php' || $current_page === 'edit-category.php') {
                 echo ' sidebar__nav__link--active';
             }
 

@@ -10,9 +10,16 @@ function getCategoryById($connection, $categoryId)
 
     $result = mysqli_query($connection, $query);
 
-    
+    $ar = array();
     if (!$result) {
         $ar["error"] = mysqli_error($connection);
+        return $ar;
+        exit();
+    }
+
+    $count = mysqli_num_rows($result);
+    if ($count == 0) {
+        $ar["error"] = "Category not found";
         return $ar;
         exit();
     }
