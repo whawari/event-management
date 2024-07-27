@@ -10,7 +10,7 @@ require_once "../helpers/hasPermission.php";
 if (
     !isset($_SESSION["loggedUserId"]) ||
     !isset($_SESSION["loggedUserPermissions"]) ||
-    !hasPermission($createCategory) ||
+    !hasPermission($editCategory) ||
     $_SERVER["REQUEST_METHOD"] !== "POST"
 ) {
     header("location: ../public/unauthorized.php");
