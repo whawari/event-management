@@ -65,7 +65,7 @@ if (!isset($_SESSION["loggedUserId"])) {
                 </div>
 
                 <?php
-                if(hasPermission($createEvent)) {
+                if (hasPermission($createEvent)) {
                     echo "<a href='create-event.php' class='button button--primary panel__content__head__cta'>New event</a>";
                 }
                 ?>
@@ -93,6 +93,10 @@ if (!isset($_SESSION["loggedUserId"])) {
             $('#feedback').hide();
 
             fetchEvents();
+
+            $(document).on("click", ".delete-button", function() {
+                deleteEvent($(this).attr("data-id"));
+            })
         });
 
         function fetchEvents() {
@@ -114,6 +118,27 @@ if (!isset($_SESSION["loggedUserId"])) {
                 complete: function() {
                     $('#spinner').hide();
                 }
+            });
+        }
+
+        function deleteEvent($eventId) {
+            $('#feedback').hide();
+
+            $.ajax({
+                url: "../../includes/deleteEvent.php",
+                method: "GET",
+                data: {
+                    action: "deleteEvent",
+                    eventId: $eventId
+                },
+                success: function(data) {
+                    fetchEvents();
+                },
+                error: function(xhr) {
+                    $('#feedback').show();
+
+                    $('#feedback').html(xhr.responseText);
+                },
             });
         }
     </script>
