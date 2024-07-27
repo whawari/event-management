@@ -49,7 +49,7 @@ $attendingIcon = file_get_contents($rootDir . "/event-management/public/images/i
             lasting impact
         </h1>
 
-        <a href="../public/events.php" class="button button--primary">Discover events</a>
+        <a href="events.php" class="button button--primary">Discover events</a>
     </div>
 
     <div class="home-description">
@@ -82,12 +82,13 @@ $attendingIcon = file_get_contents($rootDir . "/event-management/public/images/i
 
             $counter = 1;
             foreach ($categories as $category) {
+                $categoryId = $category["id"];
                 $categoryName = $category["name"];
                 $categoryImage = $category["image_name"];
 
                 echo "
                     <div class='home-categories__grid__item'>
-                        <a href='categories/$categoryName' class='home-categories__grid__item__anchor text--light'>
+                        <a href='category.php?id=$categoryId' class='home-categories__grid__item__anchor text--light'>
                             <img src='images/uploads/$categoryImage' alt='$categoryName' class='home-categories__grid__item__img'>
 
                             <h4 class='home-categories__grid__item__name'>$categoryName</h4>
@@ -104,6 +105,10 @@ $attendingIcon = file_get_contents($rootDir . "/event-management/public/images/i
             echo "</div>";
         }
         ?>
+
+        <div class="centered-box mt-24">
+            <a href="categories.php" class="button button--primary">All categories</a>
+        </div>
     </div>
 
     <div class="home-events">
@@ -123,7 +128,7 @@ $attendingIcon = file_get_contents($rootDir . "/event-management/public/images/i
     </div>
 
     <div class="snackbar" id="snackbar">
-        <p class="snackbar__text text--light body2" id="snackbar-message">Category created!</p>
+        <p class="snackbar__text text--light body2" id="snackbar-message"></p>
 
         <button type="button" class="snackbar__close" id="snackbar-close">
             <span class="snackbar__close__slice"></span>
