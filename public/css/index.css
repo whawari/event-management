@@ -77,6 +77,7 @@ html {
   --snackbar-close-bg: var(--black-alpha-8);
   --snackbar-close-slice-bg: var(--white);
   --snackbar-bg-success: var(--success);
+  --snackbar-bg-danger: var(--danger);
 
   --sidebar-bg: var(--rich-black);
   --sidebar-resize-button-bg: var(--white);

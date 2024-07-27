@@ -31,6 +31,7 @@ $attendingIcon = file_get_contents($rootDir . "/event-management/public/images/i
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/homepage.css">
     <link rel="stylesheet" href="css/events.css">
+    <link rel="stylesheet" href="css/snackbar.css">
 
     <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -121,6 +122,15 @@ $attendingIcon = file_get_contents($rootDir . "/event-management/public/images/i
         </div>
     </div>
 
+    <div class="snackbar" id="snackbar">
+        <p class="snackbar__text text--light body2" id="snackbar-message">Category created!</p>
+
+        <button type="button" class="snackbar__close" id="snackbar-close">
+            <span class="snackbar__close__slice"></span>
+            <span class="snackbar__close__slice"></span>
+        </button>
+    </div>
+
     <?php
     if (isset($_SESSION["loggedUserId"])) {
         include "../templates/dashboard-floating-button.php";
@@ -130,6 +140,18 @@ $attendingIcon = file_get_contents($rootDir . "/event-management/public/images/i
     <script type="text/javascript">
         $(document).ready(function() {
             fetchEvents();
+
+            $(document).on("click", "#snackbar-close", function() {
+                hideSnackbar();
+            })
+
+            $(document).on("click", ".attend-button", function() {
+                attendEvent($(this).attr("data-id"));
+            })
+
+            $(document).on("click", ".unattend-button", function() {
+                unattendEvent($(this).attr("data-id"));
+            })
         });
 
         function fetchEvents() {
@@ -152,6 +174,77 @@ $attendingIcon = file_get_contents($rootDir . "/event-management/public/images/i
                     $('#spinner').hide();
                 }
             });
+        }
+
+        function attendEvent($eventId) {
+            $.ajax({
+                url: "../includes/attendEvent.php",
+                method: "GET",
+                data: {
+                    action: "attendEvent",
+                    eventId: $eventId
+                },
+                success: function(data) {
+                    showSnackbar(data, "success");
+
+                    fetchEvents();
+                },
+                error: function(xhr) {
+                    showSnackbar(xhr.responseText, "danger");
+                },
+                complete: function() {
+                    setTimeout(() => {
+                        hideSnackbar();
+                    }, 5000);
+                }
+            });
+        }
+
+        function unattendEvent($eventId) {
+            $.ajax({
+                url: "../includes/unattendEvent.php",
+                method: "GET",
+                data: {
+                    action: "attendEvent",
+                    eventId: $eventId
+                },
+                success: function(data) {
+                    showSnackbar(data, "success");
+
+                    fetchEvents();
+                },
+                error: function(xhr) {
+                    showSnackbar(xhr.responseText, "danger");
+                },
+                complete: function() {
+                    setTimeout(() => {
+                        hideSnackbar();
+                    }, 5000);
+                }
+            });
+        }
+
+        function showSnackbar($message, $state = "success") {
+            $("#snackbar").css("visibility", "visible");
+            $("#snackbar").css("right", "24px");
+
+            if ($state === "danger") {
+                $("#snackbar").addClass("snackbar--danger");
+            } else {
+                $("#snackbar").addClass("snackbar--success");
+            }
+
+            $("#snackbar-message").html($message);
+        }
+
+        function hideSnackbar() {
+            $("#snackbar").css("right", "-100%");
+
+            setTimeout(() => {
+                $("#snackbar").css("visibility", "hidden");
+            }, 500);
+
+            $("#snackbar-message").html("");
         }
     </script>
 </body>

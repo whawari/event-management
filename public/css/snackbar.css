@@ -10,12 +10,16 @@
   z-index: 101;
   transition: right 0.5s;
   visibility: hidden;
+  padding: 8px 16px;
+  border-radius: 4px;
 }
 
 .snackbar--success {
   background-color: var(--snackbar-bg-success);
-  padding: 8px 16px;
-  border-radius: 4px;
+}
+
+.snackbar--danger {
+  background-color: var(--snackbar-bg-danger);
 }
 
 .snackbar__close {
