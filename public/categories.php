@@ -8,11 +8,6 @@ require_once $rootDir . "/event-management/config/db-connect.php";
 require_once $rootDir . "/event-management/helpers/getCategories.php";
 
 $categories = getCategories($connection);
-
-$attendIcon = file_get_contents($rootDir . "/event-management/public/images/icons/attend.svg");
-$attendedIcon = file_get_contents($rootDir . "/event-management/public/images/icons/attended.svg");
-$attendingIcon = file_get_contents($rootDir . "/event-management/public/images/icons/attending.svg");
-
 ?>
 
 <!DOCTYPE html>
