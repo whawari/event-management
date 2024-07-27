@@ -14,35 +14,83 @@ $attendingIcon = file_get_contents($rootDir . "/event-management/public/images/i
 
 if (isset($_GET["action"]) && $_GET["action"] == "fetchEvents") {
     $loggedUserId = "";
-    $query = "";
-
-    if (isset($_SESSION["loggedUserId"])) {
-        $loggedUserId = $_SESSION["loggedUserId"];
-
-        $query = "SELECT events.*, event_images.name AS image_name,
-        COUNT(attendees.id) AS total_attendees,
-        CASE 
-            WHEN EXISTS (
-                SELECT 1 
-                FROM attendees 
-                WHERE attendees.event_id = events.id AND attendees.user_id = $loggedUserId
-            )
-            THEN 1 
-            ELSE 0 
-        END AS is_attending
-        FROM events
-        INNER JOIN event_images ON events.id = event_images.event_id
-        LEFT JOIN attendees ON events.id = attendees.event_id
-        GROUP BY events.id, event_images.name
-        ORDER BY events.id DESC;";
-    } else {
-        $query = "SELECT events.*, event_images.name AS image_name,
+    // $query = "";
+    // logged out users view
+    $query = "SELECT events.*, event_images.name AS image_name,
         COUNT(attendees.id) AS total_attendees
         FROM events
         INNER JOIN event_images ON events.id = event_images.event_id
         LEFT JOIN attendees ON events.id = attendees.event_id
         GROUP BY events.id, event_images.name
         ORDER BY events.id DESC;";
+
+    $requestLocation = "";
+    if (isset($_GET["requestLocation"])) {
+        $requestLocation = $_GET["requestLocation"];
+    }
+
+    if (isset($_SESSION["loggedUserId"])) {
+        $loggedUserId = $_SESSION["loggedUserId"];
+
+        // logged in user -> view all events 
+        $query = "SELECT events.*, event_images.name AS image_name,
+                COUNT(attendees.id) AS total_attendees,
+                CASE 
+                    WHEN EXISTS (
+                        SELECT 1 
+                        FROM attendees 
+                        WHERE attendees.event_id = events.id AND attendees.user_id = $loggedUserId
+                    )
+                    THEN 1 
+                    ELSE 0 
+                END AS is_attending
+                FROM events
+                INNER JOIN event_images ON events.id = event_images.event_id
+                LEFT JOIN attendees ON events.id = attendees.event_id
+                GROUP BY events.id, event_images.name
+                ORDER BY events.id DESC;";
+
+        if ($requestLocation === "dashboard") {
+            if (hasPermission($createEvent)) {
+                $query = "SELECT events.*, event_images.name AS image_name,
+                    COUNT(attendees.id) AS total_attendees,
+                    CASE 
+                        WHEN EXISTS (
+                            SELECT 1 
+                            FROM attendees 
+                            WHERE attendees.event_id = events.id AND attendees.user_id = $loggedUserId
+                        )
+                        THEN 1 
+                        ELSE 0 
+                    END AS is_attending
+                    FROM events
+                    INNER JOIN event_images ON events.id = event_images.event_id
+                    LEFT JOIN attendees ON events.id = attendees.event_id
+                    WHERE events.created_by = $loggedUserId
+                    GROUP BY events.id, event_images.name
+                    ORDER BY events.id DESC;";
+            } else if (hasPermission($attendEvent)) {
+                $query = "
+                SELECT events.*, event_images.name AS image_name,
+                (SELECT COUNT(*) FROM attendees WHERE attendees.event_id = events.id) AS total_attendees,
+                    CASE 
+                        WHEN EXISTS (
+                            SELECT 1 
+                            FROM attendees 
+                            WHERE attendees.event_id = events.id AND attendees.user_id = $loggedUserId
+                        )
+                        THEN 1 
+                        ELSE 0 
+                    END AS is_attending
+                FROM events
+                INNER JOIN event_images ON events.id = event_images.event_id
+                LEFT JOIN attendees ON events.id = attendees.event_id
+                WHERE attendees.user_id = $loggedUserId
+                GROUP BY events.id, event_images.name
+                ORDER BY events.id DESC;
+                ";
+            }
+        }
     }
 
     $result = mysqli_query($connection, $query);
@@ -51,11 +99,6 @@ if (isset($_GET["action"]) && $_GET["action"] == "fetchEvents") {
         $count = mysqli_num_rows($result);
 
         if ($count) {
-            $requestLocation = "";
-            if (isset($_GET["requestLocation"])) {
-                $requestLocation = $_GET["requestLocation"];
-            }
-
             $uploadsFolderDirectory = "/event-management/public/images/uploads/";
 
             $editIcon = file_get_contents($rootDir . '/event-management/public/images/icons/edit.svg');
@@ -93,6 +136,17 @@ if (isset($_GET["action"]) && $_GET["action"] == "fetchEvents") {
                             <button type='button' title='Attend' class='icon-button icon-button--dark events-grid__item__content__cta attend-button' data-id='$eventId'>
                                 <i class='icon-button__icon'>
                                     $attendIcon
+                                </i>
+                            </button>";
+                        }
+                    }
+                } else if ($loggedUserId) {
+                    if (hasPermission($attendEvent)) {
+                        if ($isAttending) {
+                            $cta = "
+                            <button type='button' title='Attended' class='icon-button icon-button--dark events-grid__item__content__cta unattend-button' data-id='$eventId'>
+                                <i class='icon-button__icon'>
+                                    $attendedIcon
                                 </i>
                             </button>";
                         }
@@ -175,11 +229,31 @@ if (isset($_GET["action"]) && $_GET["action"] == "fetchEvents") {
                     </a>
                     ";
                 }
+
+                if (hasPermission($attendEvent)) {
+                    $addEventCta = "
+                    <a href='/event-management/public/events.php' class='button button--primary'>
+                        Browse events
+                    </a>
+                    ";
+                }
+            }
+
+            $customMessage = "There are no events yet";
+
+            if ($requestLocation === "dashboard") {
+                if (hasPermission($createEvent)) {
+                    $customMessage = "You did not create any events yet!";
+                }
+
+                if (hasPermission($attendEvent)) {
+                    $customMessage = "You did not attend any events yet!";
+                }
             }
 
             echo "
             <div class='feedback-container'>
-                <p class='text--danger'>There are no events yet!</p>
+                <p class='text--danger'>$customMessage</p>
     
                 $addEventCta
             </div>

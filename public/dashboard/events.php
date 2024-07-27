@@ -37,6 +37,7 @@ if (!isset($_SESSION["loggedUserId"])) {
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/sidebar.css">
     <link rel="stylesheet" href="../css/events.css">
+    <link rel="stylesheet" href="../css/snackbar.css">
 
     <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -53,7 +54,15 @@ if (!isset($_SESSION["loggedUserId"])) {
         <main class="panel__content">
             <div class="panel__content__head">
                 <div class="panel__content__head__container">
-                    <h4>Events</h4>
+                    <?php
+                    if(hasPermission($createEvent)) {
+                        echo "<h4>My events</h4>";
+                    } else if (hasPermission($attendEvent)) {
+                        echo "<h4>Attending events</h4>";
+                    } else {
+                        echo "<h4>Events</h4>";
+                    }
+                    ?>
 
                     <nav class="breadcrumbs">
                         <a href="../dashboard" class="link link--dark breadcrumbs__link">Dashboard</a>
@@ -83,6 +92,15 @@ if (!isset($_SESSION["loggedUserId"])) {
                         <p class="text--danger" id="feedback"></p>
                     </div>
                 </div>
+
+                <div class="snackbar" id="snackbar">
+                    <p class="snackbar__text text--light body2" id="snackbar-message">Category created!</p>
+
+                    <button type="button" class="snackbar__close" id="snackbar-close">
+                        <span class="snackbar__close__slice"></span>
+                        <span class="snackbar__close__slice"></span>
+                    </button>
+                </div>
             </div>
         </main>
     </div>
@@ -96,6 +114,14 @@ if (!isset($_SESSION["loggedUserId"])) {
 
             $(document).on("click", ".delete-button", function() {
                 deleteEvent($(this).attr("data-id"));
+            })
+
+            $(document).on("click", "#snackbar-close", function() {
+                hideSnackbar();
+            })
+
+            $(document).on("click", ".unattend-button", function() {
+                unattendEvent($(this).attr("data-id"));
             })
         });
 
@@ -140,6 +166,53 @@ if (!isset($_SESSION["loggedUserId"])) {
                     $('#feedback').html(xhr.responseText);
                 },
             });
+        }
+
+        function unattendEvent($eventId) {
+            $.ajax({
+                url: "../../includes/unattendEvent.php",
+                method: "GET",
+                data: {
+                    action: "attendEvent",
+                    eventId: $eventId
+                },
+                success: function(data) {
+                    showSnackbar(data, "success");
+
+                    fetchEvents();
+                },
+                error: function(xhr) {
+                    showSnackbar(xhr.responseText, "danger");
+                },
+                complete: function() {
+                    setTimeout(() => {
+                        hideSnackbar();
+                    }, 5000);
+                }
+            });
+        }
+
+        function showSnackbar($message, $state = "success") {
+            $("#snackbar").css("visibility", "visible");
+            $("#snackbar").css("right", "24px");
+
+            if ($state === "danger") {
+                $("#snackbar").addClass("snackbar--danger");
+            } else {
+                $("#snackbar").addClass("snackbar--success");
+            }
+
+            $("#snackbar-message").html($message);
+        }
+
+        function hideSnackbar() {
+            $("#snackbar").css("right", "-100%");
+
+            setTimeout(() => {
+                $("#snackbar").css("visibility", "hidden");
+            }, 500);
+
+            $("#snackbar-message").html("");
         }
     </script>
 </body>

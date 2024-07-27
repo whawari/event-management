@@ -103,12 +103,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             throw new Exception(mysqli_error($connection));
         }
 
+        $getRolePermissions = "SELECT permission_code
+                                FROM role_permissions
+                                WHERE role_code = '$role';";
+
+        $result = mysqli_query($connection, $getRolePermissions);
+
+        if (!mysqli_query($connection, $getRolePermissions)) {
+            throw new Exception(mysqli_error($connection));
+        }
+
+        $rolePermissions = array();
+
+        while($permission = mysqli_fetch_assoc($result)) {
+            $rolePermissions[] = $permission['permission_code'];
+        }
+
         if (!mysqli_commit($connection)) {
             throw new Exception("Commit transaction failed");
         }
 
         $_SESSION['loggedUserId'] = $userId;
         $_SESSION['loggedUserRole'] = $role;
+        $_SESSION['loggedUserName'] = $name;
+        $_SESSION['loggedUserEmail'] = $email;
+        $_SESSION['loggedUserPermissions'] = $rolePermissions;
+
 
         mysqli_autocommit($connection, TRUE);
         mysqli_close($connection);
