@@ -1,6 +1,5 @@
 <?php
 
-require_once "../../config/db-connect.php";
 require_once "../../config/roles.php";
 
 // Creating roles (admin, organizer, user)
@@ -24,5 +23,3 @@ if (mysqli_query($connection, $query)) {
 } else {
     echo "Error creating role '$user': " . mysqli_error($connection) . "<br>";
 }
-
-mysqli_close($connection);

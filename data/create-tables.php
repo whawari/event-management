@@ -102,6 +102,17 @@ if (mysqli_query($connection, $dropEventsTable)) {
 }
 
 // ----------------------------------------------------------------------
+// Drop attendees table
+echo "Dropping 'attendees' table <br>";
+$dropAttendeesTable = "DROP TABLE IF EXISTS attendees;";
+
+if (mysqli_query($connection, $dropAttendeesTable)) {
+    echo "Table 'attendees' dropped <br>";
+} else {
+    echo "Error dropping 'attendees' table: " . mysqli_error($connection) . "<br>";
+}
+
+// ----------------------------------------------------------------------
 // Create roles table
 echo "Creating 'roles' table <br>";
 $rolesSqlFilePath = 'users/roles.sql';
@@ -207,6 +218,18 @@ if (mysqli_query($connection, $createEventImagesTableQuery)) {
     echo "Table 'event_images' created successfully <br>";
 } else {
     echo "Error creating 'event_images' table: " . mysqli_error($connection) . "<br>";
+}
+
+// ----------------------------------------------------------------------
+// Create attendees table
+echo "Creating 'attendees' table <br>";
+$attendeesSqlFilePath = 'events/attendees.sql';
+$createAttendeesTableQuery = file_get_contents($attendeesSqlFilePath);
+
+if (mysqli_query($connection, $createAttendeesTableQuery)) {
+    echo "Table 'attendees' created successfully <br>";
+} else {
+    echo "Error creating 'attendees' table: " . mysqli_error($connection) . "<br>";
 }
 
 mysqli_close($connection);

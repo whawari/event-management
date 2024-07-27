@@ -1,6 +1,5 @@
 <?php
 
-require_once "../../config/db-connect.php";
 require_once "../../config/permissions.php";
 
 // Managing event permissions
@@ -33,6 +32,13 @@ if (mysqli_query($connection, $query)) {
     echo "Error creating permission '$deleteEvent': " . mysqli_error($connection) . "<br>";
 }
 
+$query = "INSERT INTO permissions (code) VALUES ('$attendEvent');";
+if (mysqli_query($connection, $query)) {
+    echo "Permission '$attendEvent' created <br>";
+} else {
+    echo "Error creating permission '$attendEvent': " . mysqli_error($connection) . "<br>";
+}
+
 // Managing categories permissions
 // -------------------------------
 $query = "INSERT INTO permissions (code) VALUES ('$viewCategory');";
@@ -62,5 +68,3 @@ if (mysqli_query($connection, $query)) {
 } else {
     echo "Error creating permission '$deleteCategory': " . mysqli_error($connection) . "<br>";
 }
-
-mysqli_close($connection);
