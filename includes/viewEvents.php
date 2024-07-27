@@ -104,7 +104,7 @@ if (isset($_GET["action"]) && $_GET["action"] == "fetchEvents") {
                     if (hasPermission($editEvent) && hasPermission($deleteEvent)) {
                         $footer = "
                         <div class='events-grid__item__footer'>
-                            <a href='/event-management/public/dashboard/edit-category.php?id=$eventId' type='button' class='icon-button icon-button--dark icon-button--mr-minus8' title='Edit'>
+                            <a href='/event-management/public/dashboard/edit-event.php?id=$eventId' type='button' class='icon-button icon-button--dark icon-button--mr-minus8' title='Edit'>
                                 <i class='icon-button__icon'>$editIcon</i>
                             </a>
         
@@ -116,7 +116,7 @@ if (isset($_GET["action"]) && $_GET["action"] == "fetchEvents") {
                     } else if (hasPermission($editEvent)) {
                         $footer = "
                         <div class='events-grid__item__footer'>
-                            <a href='/event-management/public/dashboard/edit-category.php?id=$eventId' type='button' class='icon-button icon-button--dark icon-button--mr-minus8' title='Edit'>
+                            <a href='/event-management/public/dashboard/edit-event.php?id=$eventId' type='button' class='icon-button icon-button--dark icon-button--mr-minus8' title='Edit'>
                                 <i class='icon-button__icon'>$editIcon</i>
                             </a>
                         </div>
