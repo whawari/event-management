@@ -72,14 +72,16 @@ if (!isset($_SESSION["loggedUserId"])) {
             </div>
 
             <div class="panel__content__body">
-                <div id="categories"></div>
+                <div class="container">
+                    <div id="categories"></div>
 
-                <div class="feedback-container">
-                    <i class="spinner" id="spinner">
-                        <?php echo file_get_contents($rootDirectory . "/event-management/public/images/icons/spinner.svg") ?>
-                    </i>
+                    <div class="feedback-container">
+                        <i class="spinner" id="spinner">
+                            <?php echo file_get_contents($rootDirectory . "/event-management/public/images/icons/spinner.svg") ?>
+                        </i>
 
-                    <p class="text--danger" id="feedback"></p>
+                        <p class="text--danger" id="feedback"></p>
+                    </div>
                 </div>
             </div>
         </main>

@@ -108,61 +108,63 @@ if (isset($_SESSION["errors"])) {
             <?php
             } else {
             ?>
-                <div class="card">
-                    <form action="../../includes/editCategory.php" method="post" enctype="multipart/form-data" class="form">
-                        <!-- not secure -->
-                        <input type="hidden" name="categoryId" value="<?php echo $categoryId ?>">
+                <div class="container">
+                    <div class="card">
+                        <form action="../../includes/editCategory.php" method="post" enctype="multipart/form-data" class="form">
+                            <!-- not secure -->
+                            <input type="hidden" name="categoryId" value="<?php echo $categoryId ?>">
 
-                        <div class="form__field">
-                            <label for="name" title="Required" class="form__field__label">
-                                Name <span class="form__field__label__required">*</span>
-                            </label>
+                            <div class="form__field">
+                                <label for="name" title="Required" class="form__field__label">
+                                    Name <span class="form__field__label__required">*</span>
+                                </label>
 
-                            <input type="text" name="name" id="name" value="<?php echo isset($data['name']) ? $data['name']  : '' ?>" class="form__field__input<?php echo isset($errors['nameError']) ? ' form__field__input--danger' : '' ?>">
+                                <input type="text" name="name" id="name" value="<?php echo isset($data['name']) ? $data['name']  : '' ?>" class="form__field__input<?php echo isset($errors['nameError']) ? ' form__field__input--danger' : '' ?>">
+
+                                <?php
+                                if (isset($errors["nameError"])) {
+                                    echo "<span class='body2 form__field__info--danger'>" . $errors["nameError"] . "</span>";
+                                }
+                                ?>
+                            </div>
+
+                            <div class="form__field">
+                                <p for="name" title="Required" class="form__field__label">
+                                    Featured image <span class="form__field__label__required">*</span>
+                                </p>
+
+                                <label class="form__field__file<?php echo isset($errors['imageError']) ? ' form__field__file--danger' : '' ?>" tabindex="0" onkeydown="triggerButtonClick(event)">
+                                    <input type="file" name="image" class="form__field__file__input" accept="image/jpg,image/jpeg,image/png,image/webp" onchange="previewImage(event)">
+                                    <!-- not secure -->
+                                    <input type="hidden" name="oldImageName" value="<?php echo isset($data['image_name']) ? $data['image_name'] : '' ?>">
+
+                                    <i class="form_field_file_icon">
+                                        <?php echo file_get_contents($rootDirectory . "/event-management/public/images/icons/upload.svg") ?>
+                                    </i>
+
+                                    <span class="form__field__file__title">Select image</span>
+
+                                    <img src="<?php echo isset($data['image_name']) ? '/event-management/public/images/uploads/' . $data['image_name'] : '#' ?>" style="<?php echo isset($data['image_name']) ? 'display: block;' : '' ?>" alt="Image preview" class="form__field__file__img">
+                                </label>
+
+                                <p class="body2 form__field__info">Upload a JPG, JPEG, PNG or WEBP image of a maximum size of 2 MB</p>
+
+                                <?php
+                                if (isset($errors["imageError"])) {
+                                    echo "<span class='body2 form__field__info--danger'>" . $errors["imageError"] . "</span>";
+                                }
+                                ?>
+                            </div>
 
                             <?php
-                            if (isset($errors["nameError"])) {
-                                echo "<span class='body2 form__field__info--danger'>" . $errors["nameError"] . "</span>";
+                            if (isset($errors["generalError"])) {
+                                echo "<p class='body2 text--danger form__error'>" . $errors["generalError"] . "</p>";
                             }
                             ?>
-                        </div>
 
-                        <div class="form__field">
-                            <p for="name" title="Required" class="form__field__label">
-                                Featured image <span class="form__field__label__required">*</span>
-                            </p>
-
-                            <label class="form__field__file<?php echo isset($errors['imageError']) ? ' form__field__file--danger' : '' ?>" tabindex="0" onkeydown="triggerButtonClick(event)">
-                                <input type="file" name="image" class="form__field__file__input" accept="image/jpg,image/jpeg,image/png,image/webp" onchange="previewImage(event)">
-                                <!-- not secure -->
-                                <input type="hidden" name="oldImageName" value="<?php echo isset($data['image_name']) ? $data['image_name'] : '' ?>">
-
-                                <i class="form_field_file_icon">
-                                    <?php echo file_get_contents($rootDirectory . "/event-management/public/images/icons/upload.svg") ?>
-                                </i>
-
-                                <span class="form__field__file__title">Select image</span>
-
-                                <img src="<?php echo isset($data['image_name']) ? '/event-management/public/images/uploads/' . $data['image_name'] : '#' ?>" style="<?php echo isset($data['image_name']) ? 'display: block;' : '' ?>" alt="Image preview" class="form__field__file__img">
-                            </label>
-
-                            <p class="body2 form__field__info">Upload a JPG, JPEG, PNG or WEBP image of a maximum size of 2 MB</p>
-
-                            <?php
-                            if (isset($errors["imageError"])) {
-                                echo "<span class='body2 form__field__info--danger'>" . $errors["imageError"] . "</span>";
-                            }
-                            ?>
-                        </div>
-
-                        <?php
-                        if (isset($errors["generalError"])) {
-                            echo "<p class='body2 text--danger form__error'>" . $errors["generalError"] . "</p>";
-                        }
-                        ?>
-
-                        <button type="submit" class="button button--primary full-width form__button">Save</button>
-                    </form>
+                            <button type="submit" class="button button--primary full-width form__button">Save</button>
+                        </form>
+                    </div>
                 </div>
             <?php
             }

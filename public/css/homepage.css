@@ -77,3 +77,15 @@
 .home-events {
   margin-bottom: 160px;
 }
+
+@media screen and (max-width: 575px) {
+  .home-categories__grid {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+  }
+
+  .home-categories__grid__item {
+    width: 50%;
+  }
+}
