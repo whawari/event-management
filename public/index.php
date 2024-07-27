@@ -67,7 +67,7 @@ $attendingIcon = file_get_contents($rootDir . "/event-management/public/images/i
                 <p class='text--center text--danger'>" . $categories["error"] . "</p>
             ";
 
-            if(hasPermission($createCategory)) {
+            if (hasPermission($createCategory)) {
                 echo "
                 <a href='/event-management/public/dashboard/create-category.php' class='button button--primary'>
                     Add category
@@ -94,7 +94,7 @@ $attendingIcon = file_get_contents($rootDir . "/event-management/public/images/i
                     </div>
                 ";
 
-                if($counter === 4) {
+                if ($counter === 4) {
                     break;
                 }
                 $counter++;
