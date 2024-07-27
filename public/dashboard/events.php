@@ -13,7 +13,7 @@ if (!isset($_SESSION["loggedUserId"])) {
 
     exit();
 } else {
-    if (!isset($_SESSION["loggedUserPermissions"]) || !hasPermission($viewCategory)) {
+    if (!isset($_SESSION["loggedUserPermissions"]) || !hasPermission($viewEvent)) {
         header("location: ../unauthorized.php");
     }
 }
@@ -26,7 +26,7 @@ if (!isset($_SESSION["loggedUserId"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Categories</title>
+    <title>Events</title>
 
     <!-- Google font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,7 +36,7 @@ if (!isset($_SESSION["loggedUserId"])) {
     <!-- Custom styles -->
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/sidebar.css">
-    <link rel="stylesheet" href="../css/categories.css">
+    <link rel="stylesheet" href="../css/events.css">
 
     <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -53,33 +53,35 @@ if (!isset($_SESSION["loggedUserId"])) {
         <main class="panel__content">
             <div class="panel__content__head">
                 <div class="panel__content__head__container">
-                    <h4>Categories</h4>
+                    <h4>Events</h4>
 
                     <nav class="breadcrumbs">
                         <a href="../dashboard" class="link link--dark breadcrumbs__link">Dashboard</a>
 
                         <span class="breadcrumbs__separator"></span>
 
-                        <span class="breadcrumbs__active">Categories</span>
+                        <span class="breadcrumbs__active">Events</span>
                     </nav>
                 </div>
 
                 <?php
-                if (hasPermission($createCategory)) {
-                    echo "<a href='create-category.php' class='button button--primary panel__content__head__cta'>New category</a>";
+                if(hasPermission($createEvent)) {
+                    echo "<a href='create-event.php' class='button button--primary panel__content__head__cta'>New event</a>";
                 }
                 ?>
             </div>
 
             <div class="panel__content__body">
-                <div id="categories"></div>
+                <div class="container">
+                    <div id="events"></div>
 
-                <div class="feedback-container">
-                    <i class="spinner" id="spinner">
-                        <?php echo file_get_contents($rootDirectory . "/event-management/public/images/icons/spinner.svg") ?>
-                    </i>
+                    <div class="feedback-container">
+                        <i class="spinner" id="spinner">
+                            <?php echo file_get_contents($rootDirectory . "/event-management/public/images/icons/spinner.svg") ?>
+                        </i>
 
-                    <p class="text--danger" id="feedback"></p>
+                        <p class="text--danger" id="feedback"></p>
+                    </div>
                 </div>
             </div>
         </main>
@@ -90,22 +92,19 @@ if (!isset($_SESSION["loggedUserId"])) {
         $(document).ready(function() {
             $('#feedback').hide();
 
-            fetchCategories();
-
-            $(document).on("click", ".delete-button", function() {
-                deleteCategory($(this).attr("data-id"));
-            })
+            fetchEvents();
         });
 
-        function fetchCategories() {
+        function fetchEvents() {
             $.ajax({
-                url: "../../includes/viewCategories.php",
+                url: "../../includes/viewEvents.php",
                 method: "GET",
                 data: {
-                    action: "fetchCategories"
+                    action: "fetchEvents",
+                    requestLocation: "dashboard"
                 },
                 success: function(data) {
-                    $('#categories').html(data);
+                    $('#events').html(data);
                 },
                 error: function(xhr) {
                     $('#feedback').show();
@@ -114,20 +113,6 @@ if (!isset($_SESSION["loggedUserId"])) {
                 },
                 complete: function() {
                     $('#spinner').hide();
-                }
-            });
-        }
-
-        function deleteCategory($categoryId) {
-            $.ajax({
-                url: "../../includes/deleteCategory.php",
-                method: "GET",
-                data: {
-                    action: "deleteCategory",
-                    categoryId: $categoryId
-                },
-                success: function(data) {
-                    fetchCategories();
                 }
             });
         }

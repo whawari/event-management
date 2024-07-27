@@ -1,8 +1,9 @@
 .header {
   position: fixed;
   width: 100%;
-  padding: 24px;
+  padding: 24px 0px;
   transition: background-color 0.3s;
+  z-index: 90;
 }
 
 .header__container {
@@ -25,6 +26,13 @@
 .header__burger > i {
   color: var(--header-burger-icon);
 }
+
+@media screen and (max-width: 1023px) {
+  .header {
+    padding: 24px;
+  }
+}
+
 
 @media screen and (max-width: 768px) {
   .header__menu,

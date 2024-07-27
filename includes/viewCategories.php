@@ -50,8 +50,8 @@ if (isset($_GET["action"]) && $_GET["action"] == "fetchCategories") {
             echo "</div>";
         } else {
             echo "
-            <div class='categories-empty'>
-                <p class='text--dark'>Nothing to display yet!</p>
+            <div class='feedback-container'>
+                <p class='text--danger'>There are no categories yet!</p>
     
                 <a href='/event-management/public/dashboard/create-category.php' class='button button--primary'>
                     Add category

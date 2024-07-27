@@ -1,0 +1,104 @@
+.events-grid {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.events-grid__item {
+  width: calc(100% / 3 - 40px / 3);
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: rgba(145, 158, 171, 0.2) 0px 0px 2px 0px,
+    rgba(145, 158, 171, 0.12) 0px 12px 24px -4px;
+}
+
+.events-grid__item__anchor {
+  display: block;
+  width: 100%;
+  position: relative;
+}
+
+.events-grid__item__anchor__img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.events-grid__item__content {
+  padding: 24px;
+  position: relative;
+}
+
+.events-grid__item__content__cta {
+  position: absolute;
+  top: -20px;
+  right: 24px;
+  box-shadow: rgba(145, 158, 171, 0.2) 0px 0px 2px 0px,
+    rgba(145, 158, 171, 0.12) 0px 12px 24px -4px;
+  background-color: var(--white);
+  transition: transform 0.3s;
+}
+
+.events-grid__item__content__cta:hover,
+.events-grid__item__content__cta:focus-visible {
+  background-color: var(--white);
+  transform: scale(1.2);
+}
+
+.events-grid__item__content__cta > .icon-button__icon {
+  color: var(--primary);
+}
+
+.events-grid__item__content__box--column {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 32px;
+  align-items: flex-start;
+}
+
+.events-grid__item__content__box--row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.events-grid__item__content__box__attending {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--primary);
+}
+
+.events-grid__item__content__box__attending > span {
+  color: var(--primary);
+}
+
+.events-grid__item__content__box__attending__icon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+}
+
+.events-grid__item__footer {
+  padding: 0 24px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+/* sidebar--minimized */
+
+@media screen and (max-width: 1023px) {
+  .events-grid__item {
+    width: calc(50% - 10px);
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .events-grid__item {
+    width: 100%;
+  }
+}

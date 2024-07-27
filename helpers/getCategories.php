@@ -3,7 +3,10 @@
 // Return categories []
 function getCategories($connection)
 {
-    $query = "SELECT * FROM categories;";
+    $query = "SELECT categories.* , category_images.name AS image_name
+    FROM categories
+    INNER JOIN category_images ON categories.id = category_images.category_id
+    ORDER BY categories.id DESC;";
 
     $result = mysqli_query($connection, $query);
 
