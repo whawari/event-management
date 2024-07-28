@@ -11,6 +11,7 @@ require_once $rootDir . "/event-management/helpers/hasPermission.php";
 $attendIcon = file_get_contents($rootDir . "/event-management/public/images/icons/attend.svg");
 $attendedIcon = file_get_contents($rootDir . "/event-management/public/images/icons/attended.svg");
 $attendingIcon = file_get_contents($rootDir . "/event-management/public/images/icons/attending.svg");
+$locationIcon = file_get_contents($rootDir . "/event-management/public/images/icons/location.svg");
 
 if (isset($_GET["action"]) && $_GET["action"] == "fetchEvents") {
     $loggedUserId = "";
@@ -154,6 +155,8 @@ if (isset($_GET["action"]) && $_GET["action"] == "fetchEvents") {
             $editIcon = file_get_contents($rootDir . '/event-management/public/images/icons/edit.svg');
             $deleteIcon = file_get_contents($rootDir . '/event-management/public/images/icons/delete.svg');
 
+            $counter = 1;
+
             echo "<div class='events-grid'>";
             while ($event = mysqli_fetch_assoc($result)) {
                 $imageSrc = $uploadsFolderDirectory . $event["image_name"];
@@ -246,10 +249,14 @@ if (isset($_GET["action"]) && $_GET["action"] == "fetchEvents") {
                             $cta
                             
                             <div class='events-grid__item__content__box--column'>
-                                <span class='overline events-grid__item__content__box__location'>$eventLocation</span>
+                                <span class='overline events-grid__item__content__box__location'>
+                                    <i class='events-grid__item__content__box__location__icon'>$locationIcon</i>
+                                
+                                    $eventLocation
+                                </span>
                             
                                 <a href='/event-management/public/event.php?$eventId' class='text--dark'>
-                                    <h4 class='events-grid__item__content__box__title'>$eventTitle</h4>
+                                    <h5 class='events-grid__item__content__box__title'>$eventTitle</h5>
                                 </a>
                             </div>
 
@@ -267,8 +274,24 @@ if (isset($_GET["action"]) && $_GET["action"] == "fetchEvents") {
                         $footer
                     </div>
                 ";
+
+                if ($requestLocation === "homepage" && $counter === 6) {
+                    break;
+                }
+
+                $counter++;
             }
             echo "</div>";
+
+            if ($requestLocation === "homepage" && $counter >= 6) {
+                echo "
+                    <div class='centered-box mt-24'>
+                        <a href='/event-management/public/events.php' class='button button--primary'>
+                            Browse more
+                        </a>
+                    </div>
+                ";
+            }
         } else {
             $addEventCta = "";
             if ($loggedUserId) {
