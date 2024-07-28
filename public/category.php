@@ -138,7 +138,7 @@ mysqli_close($connection);
                 data: {
                     action: "fetchEvents",
                     requestLocation: "category",
-                    categoryId: <?php echo $categoryId ?>
+                    categoryId: <?php echo $categoryId ? $categoryId : "null" ?>
 
                 },
                 success: function(data) {
