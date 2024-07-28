@@ -160,13 +160,11 @@ if (isset($_GET["action"]) && $_GET["action"] == "fetchEvents") {
             echo "<div class='events-grid'>";
             while ($event = mysqli_fetch_assoc($result)) {
                 $imageSrc = $uploadsFolderDirectory . $event["image_name"];
-                $imageName = $event["image_name"];
                 $eventId = $event["id"];
                 $eventTitle = $event["title"];
                 $eventDate = $event["date"];
                 $eventTime = $event["time"];
                 $eventLocation = $event["location"];
-                $eventImage = $event["image_name"];
                 $totalAttendees = $event["total_attendees"];
 
                 $isAttending = 0;
@@ -241,7 +239,7 @@ if (isset($_GET["action"]) && $_GET["action"] == "fetchEvents") {
 
                 echo "
                     <div class='events-grid__item'>
-                        <a href='/event-management/public/event.php?$eventId' class='events-grid__item__anchor'>
+                        <a href='/event-management/public/event.php?id=$eventId' class='events-grid__item__anchor'>
                             <img src='$imageSrc' alt='$eventTitle' class='events-grid__item__anchor__img'>
                         </a>
 
@@ -255,7 +253,7 @@ if (isset($_GET["action"]) && $_GET["action"] == "fetchEvents") {
                                     $eventLocation
                                 </span>
                             
-                                <a href='/event-management/public/event.php?$eventId' class='text--dark'>
+                                <a href='/event-management/public/event.php?id=$eventId' class='text--dark'>
                                     <h5 class='events-grid__item__content__box__title'>$eventTitle</h5>
                                 </a>
                             </div>
