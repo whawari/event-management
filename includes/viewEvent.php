@@ -118,7 +118,7 @@ if (isset($_GET["action"]) && $_GET["action"] === "fetchEvent") {
 
     $categoryNameSection = "";
     if ($categoryName) {
-        $categoryNameSection = "<a href='/event-management/public/category.php?id=$categoryId' class='subtitle event-category'>$categoryName</a>";
+        $categoryNameSection = "<a href='/event-management/public/category.php?id=$categoryId' class='subtitle link link--accent event-category'>$categoryName</a>";
     }
 
     $organizedBySection = "";
