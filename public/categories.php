@@ -78,6 +78,8 @@ $categories = getCategories($connection);
         </div>
     </div>
 
+    <?php include "../templates/footer.php"; ?>
+
     <?php
     if (isset($_SESSION["loggedUserId"])) {
         include "../templates/dashboard-floating-button.php";

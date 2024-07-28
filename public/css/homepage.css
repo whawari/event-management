@@ -12,7 +12,7 @@
 }
 
 .home-description {
-  padding: 120px 0;
+  padding: 120px 24px;
   background-color: var(--primary-dark);
   margin-bottom: 160px;
 }

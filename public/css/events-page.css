@@ -3,5 +3,11 @@ header {
 }
 
 .events {
-    margin: 216px 0 120px;
+  margin: 216px 0 120px;
+}
+
+@media screen and (max-width: 1023px) {
+  .events {
+    padding: 0 24px;
+  }
 }

@@ -30,5 +30,11 @@ header {
 }
 
 .category__content {
-    margin: 120px 0;
+  margin: 120px 0;
+}
+
+@media screen and (max-width: 1023px) {
+  .category__content {
+    padding: 0 24px;
+  }
 }

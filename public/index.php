@@ -127,6 +127,8 @@ $attendingIcon = file_get_contents($rootDir . "/event-management/public/images/i
         </div>
     </div>
 
+    <?php include "../templates/footer.php"; ?>
+
     <div class="snackbar" id="snackbar">
         <p class="snackbar__text text--light body2" id="snackbar-message"></p>
 
