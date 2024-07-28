@@ -5,6 +5,7 @@
   transition: background-color 0.3s;
   z-index: 90;
   top: 0;
+  height: 96px;
 }
 
 .header__container {

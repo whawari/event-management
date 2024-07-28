@@ -3,7 +3,7 @@
 }
 
 .categories {
-  padding: 200px 0px 120px;
+  padding: 216px 0px 120px;
 }
 
 .categories__grid {
@@ -55,7 +55,7 @@
 
 @media screen and (max-width: 1023px) {
   .categories {
-    padding: 200px 24px 120px;
+    padding: 216px 24px 120px;
   }
 }
 

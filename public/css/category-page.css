@@ -8,11 +8,11 @@ header {
   align-items: center;
   justify-content: center;
   gap: 24px;
-  padding-top: 200px;
+  margin-top: 216px;
 }
 
 .category__header {
-  margin-top: 80px;
+  margin-top: 96px;
   height: 600px;
   position: relative;
   background-size: cover;
