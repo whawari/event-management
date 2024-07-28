@@ -1,0 +1,7 @@
+header {
+  background-color: var(--header-bg-scroll) !important;
+}
+
+.events {
+    margin: 200px 0 120px;
+}
