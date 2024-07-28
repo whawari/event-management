@@ -5,13 +5,36 @@ if (!isset($_SESSION)) {
 
 $rootDir = $_SERVER["DOCUMENT_ROOT"];
 require_once $rootDir . "/event-management/config/db-connect.php";
-require_once $rootDir . "/event-management/helpers/getCategories.php";
-
-$categories = getCategories($connection);
+require_once $rootDir . "/event-management/helpers/getCategoryById.php";
+require_once $rootDir . "/event-management/helpers/getEventsByCategoryId.php";
 
 $attendIcon = file_get_contents($rootDir . "/event-management/public/images/icons/attend.svg");
 $attendedIcon = file_get_contents($rootDir . "/event-management/public/images/icons/attended.svg");
 $attendingIcon = file_get_contents($rootDir . "/event-management/public/images/icons/attending.svg");
+
+$categoryId = "";
+$categoryName = "";
+$categoryImage = "";
+$categoryError = "";
+$category = array();
+
+if (isset($_GET["id"])) {
+    $categoryId = $_GET["id"];
+
+    $category = getCategoryById($connection, $categoryId ?? "null");
+
+    if (isset($category["error"])) {
+        $categoryError = $category["error"];
+    } else {
+        $categoryName = $category["name"];
+        $categoryImage = $category["image_name"];
+    }
+} else {
+    $categoryError = "Category not found";
+}
+
+
+mysqli_close($connection);
 
 ?>
 
@@ -29,111 +52,48 @@ $attendingIcon = file_get_contents($rootDir . "/event-management/public/images/i
 
     <!-- Custom styles -->
     <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/homepage.css">
     <link rel="stylesheet" href="css/events.css">
     <link rel="stylesheet" href="css/snackbar.css">
+    <link rel="stylesheet" href="css/category-page.css">
 
     <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
-    <title>EventHub - Discover Events Around You</title>
+    <title>EventHub - Category<?php echo $categoryName ? " | " . $categoryName : "" ?></title>
 </head>
 
 <body>
+
     <?php include "../templates/header.php"; ?>
 
-    <div class="hero">
-        <h1 class="text--large text--light text--center">
-            Creating positive
-            <br>
-            lasting impact
-        </h1>
-
-        <a href="events.php" class="button button--primary">Discover events</a>
-    </div>
-
-    <div class="home-description">
-        <div class="container">
-            <h2 class="text--light text--center home-description__text">Transforming your events hosting experience</h2>
-        </div>
-    </div>
-
-    <div class="home-categories">
-        <h3 class="text--center home-categories__text">Latest categories</h3>
-
+    <div class="category">
         <?php
-        if (isset($categories["error"])) {
-            echo "<div class='feedback-container'>";
+        if ($category && !$categoryError) {
             echo "
-                <p class='text--center text--danger'>" . $categories["error"] . "</p>
+            <div class='category__header' style='background-image: url(images/uploads/$categoryImage);'>
+                <div class='category__header__overlay'>
+                    <h1 class='text--large text--light text--center'>$categoryName</h1>
+                </div>
+            </div>
+
+            <div class='category__content'>
+                <div class='container'>
+                    <div id='events'></div>
+                </div>
+            </div>
             ";
-
-            if (hasPermission($createCategory)) {
-                echo "
-                <a href='/event-management/public/dashboard/create-category.php' class='button button--primary'>
-                    Add category
-                </a>
-                ";
-            }
-
-            echo "</div>";
         } else {
-            echo "<div class='home-categories__grid'>";
+            echo "
+            <div class='category__error container'>
+                <p class='text--danger'>$categoryError</p>
 
-            $counter = 1;
-            foreach ($categories as $category) {
-                $categoryId = $category["id"];
-                $categoryName = $category["name"];
-                $categoryImage = $category["image_name"];
-
-                echo "
-                    <div class='home-categories__grid__item'>
-                        <a href='category.php?id=$categoryId' class='home-categories__grid__item__anchor text--light'>
-                            <img src='images/uploads/$categoryImage' alt='$categoryName' class='home-categories__grid__item__img'>
-
-                            <h5 class='home-categories__grid__item__name'>$categoryName</h5>
-                        </a>
-                    </div>
-                ";
-
-                if ($counter === 4) {
-                    break;
-                }
-                $counter++;
-            }
-
-            echo "</div>";
+                <a href='categories.php' class='button button--primary'>Categories</a>
+            </div>
+            ";
         }
         ?>
 
-        <div class="centered-box mt-24">
-            <a href="categories.php" class="button button--primary">All categories</a>
-        </div>
-    </div>
 
-    <div class="home-events">
-        <div class="container">
-            <h3 class="text--center home-events__text">Upcoming events</h3>
-
-            <div id="events"></div>
-
-            <div class="feedback-container">
-                <i class="spinner" id="spinner">
-                    <?php echo file_get_contents($rootDirectory . "/event-management/public/images/icons/spinner.svg") ?>
-                </i>
-
-                <p class="text--danger" id="feedback"></p>
-            </div>
-        </div>
-    </div>
-
-    <div class="snackbar" id="snackbar">
-        <p class="snackbar__text text--light body2" id="snackbar-message"></p>
-
-        <button type="button" class="snackbar__close" id="snackbar-close">
-            <span class="snackbar__close__slice"></span>
-            <span class="snackbar__close__slice"></span>
-        </button>
     </div>
 
     <?php
@@ -144,7 +104,13 @@ $attendingIcon = file_get_contents($rootDir . "/event-management/public/images/i
 
     <script type="text/javascript">
         $(document).ready(function() {
-            fetchEvents();
+            <?php
+            if (!$categoryError && $categoryId) {
+            ?>
+                fetchEvents();
+            <?php
+            }
+            ?>
 
             $(document).on("click", "#snackbar-close", function() {
                 hideSnackbar();
@@ -165,7 +131,9 @@ $attendingIcon = file_get_contents($rootDir . "/event-management/public/images/i
                 method: "GET",
                 data: {
                     action: "fetchEvents",
-                    requestLocation: "homepage"
+                    requestLocation: "category",
+                    categoryId: <?php echo $categoryId ?>
+
                 },
                 success: function(data) {
                     $('#events').html(data);

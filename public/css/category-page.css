@@ -1,0 +1,34 @@
+header {
+  background-color: var(--header-bg-scroll) !important;
+}
+
+.category__error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding-top: 200px;
+}
+
+.category__header {
+  margin-top: 80px;
+  height: 600px;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+
+.category__header__overlay {
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category__content {
+    margin: 120px 0;
+}

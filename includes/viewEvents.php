@@ -30,27 +30,29 @@ if (isset($_GET["action"]) && $_GET["action"] == "fetchEvents") {
     }
 
     if (isset($_SESSION["loggedUserId"])) {
+        // logged in users
         $loggedUserId = $_SESSION["loggedUserId"];
 
         // logged in user -> view all events 
         $query = "SELECT events.*, event_images.name AS image_name,
-                COUNT(attendees.id) AS total_attendees,
-                CASE 
-                    WHEN EXISTS (
-                        SELECT 1 
-                        FROM attendees 
-                        WHERE attendees.event_id = events.id AND attendees.user_id = $loggedUserId
-                    )
-                    THEN 1 
-                    ELSE 0 
-                END AS is_attending
-                FROM events
-                INNER JOIN event_images ON events.id = event_images.event_id
-                LEFT JOIN attendees ON events.id = attendees.event_id
-                GROUP BY events.id, event_images.name
-                ORDER BY events.id DESC;";
+            COUNT(attendees.id) AS total_attendees,
+            CASE 
+                WHEN EXISTS (
+                    SELECT 1 
+                    FROM attendees 
+                    WHERE attendees.event_id = events.id AND attendees.user_id = $loggedUserId
+                )
+                THEN 1 
+                ELSE 0 
+            END AS is_attending
+            FROM events
+            INNER JOIN event_images ON events.id = event_images.event_id
+            LEFT JOIN attendees ON events.id = attendees.event_id
+            GROUP BY events.id, event_images.name
+            ORDER BY events.id DESC;";
 
         if ($requestLocation === "dashboard") {
+            // logged in user -> view created events
             if (hasPermission($createEvent)) {
                 $query = "SELECT events.*, event_images.name AS image_name,
                     COUNT(attendees.id) AS total_attendees,
@@ -70,9 +72,33 @@ if (isset($_GET["action"]) && $_GET["action"] == "fetchEvents") {
                     GROUP BY events.id, event_images.name
                     ORDER BY events.id DESC;";
             } else if (hasPermission($attendEvent)) {
-                $query = "
-                SELECT events.*, event_images.name AS image_name,
-                (SELECT COUNT(*) FROM attendees WHERE attendees.event_id = events.id) AS total_attendees,
+                // logged in user -> view attending events
+                $query = "SELECT events.*, event_images.name AS image_name,
+                    (SELECT COUNT(*) FROM attendees WHERE attendees.event_id = events.id) AS total_attendees,
+                        CASE 
+                            WHEN EXISTS (
+                                SELECT 1 
+                                FROM attendees 
+                                WHERE attendees.event_id = events.id AND attendees.user_id = $loggedUserId
+                            )
+                            THEN 1 
+                            ELSE 0 
+                        END AS is_attending
+                    FROM events
+                    INNER JOIN event_images ON events.id = event_images.event_id
+                    LEFT JOIN attendees ON events.id = attendees.event_id
+                    WHERE attendees.user_id = $loggedUserId
+                    GROUP BY events.id, event_images.name
+                    ORDER BY events.id DESC;
+                ";
+            }
+        } else if ($requestLocation === "category") {
+            if (isset($_GET["categoryId"])) {
+                $categoryId = $_GET["categoryId"];
+
+                // logged in user -> view events by category id
+                $query = "SELECT events.*, event_images.name AS image_name,
+                    COUNT(attendees.id) AS total_attendees,
                     CASE 
                         WHEN EXISTS (
                             SELECT 1 
@@ -82,13 +108,37 @@ if (isset($_GET["action"]) && $_GET["action"] == "fetchEvents") {
                         THEN 1 
                         ELSE 0 
                     END AS is_attending
-                FROM events
-                INNER JOIN event_images ON events.id = event_images.event_id
-                LEFT JOIN attendees ON events.id = attendees.event_id
-                WHERE attendees.user_id = $loggedUserId
-                GROUP BY events.id, event_images.name
-                ORDER BY events.id DESC;
-                ";
+                    FROM events
+                    INNER JOIN event_images ON events.id = event_images.event_id
+                    LEFT JOIN attendees ON events.id = attendees.event_id
+                    WHERE events.category_id = $categoryId
+                    GROUP BY events.id, event_images.name
+                    ORDER BY events.id DESC;";
+            } else {
+                header('HTTP/1.1 400 Bad Request');
+                echo "It looks like your request cannot be processed due to incorrect URL syntax";
+                exit();
+            }
+        }
+    } else {
+        // logged out users
+        if ($requestLocation === "category") {
+            if (isset($_GET["categoryId"])) {
+                $categoryId = $_GET["categoryId"];
+
+                // logged out user -> view events by category id
+                $query = "SELECT events.*, event_images.name AS image_name,
+                    COUNT(attendees.id) AS total_attendees
+                    FROM events
+                    INNER JOIN event_images ON events.id = event_images.event_id
+                    LEFT JOIN attendees ON events.id = attendees.event_id
+                    WHERE events.category_id = $categoryId
+                    GROUP BY events.id, event_images.name
+                    ORDER BY events.id DESC;";
+            } else {
+                header('HTTP/1.1 400 Bad Request');
+                echo "It looks like your request cannot be processed due to incorrect URL syntax";
+                exit();
             }
         }
     }

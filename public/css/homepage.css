@@ -48,7 +48,7 @@
 
 .home-categories__grid__item__img {
   width: 100%;
-  aspect-ratio: 9 / 16;
+  aspect-ratio: 1;
   display: block;
   object-fit: cover;
 }
@@ -78,7 +78,7 @@
   margin-bottom: 160px;
 }
 
-@media screen and (max-width: 575px) {
+@media screen and (max-width: 768px) {
   .home-categories__grid {
     display: flex;
     flex-wrap: wrap;
