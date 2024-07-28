@@ -6,7 +6,6 @@ if (!isset($_SESSION)) {
 $rootDir = $_SERVER["DOCUMENT_ROOT"];
 require_once $rootDir . "/event-management/config/db-connect.php";
 require_once $rootDir . "/event-management/helpers/getCategoryById.php";
-require_once $rootDir . "/event-management/helpers/getEventsByCategoryId.php";
 
 $attendIcon = file_get_contents($rootDir . "/event-management/public/images/icons/attend.svg");
 $attendedIcon = file_get_contents($rootDir . "/event-management/public/images/icons/attended.svg");
