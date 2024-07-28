@@ -93,7 +93,7 @@ mysqli_close($connection);
             <div class='category__error container'>
                 <p class='text--danger'>$categoryError</p>
 
-                <a href='categories.php' class='button button--primary'>Categories</a>
+                <a href='categories.php' class='button button--primary'>Browse categories</a>
             </div>
             ";
         }
