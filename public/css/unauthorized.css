@@ -1,0 +1,24 @@
+.header {
+  background-color: var(--header-bg-scroll) !important;
+}
+
+.unauthorized {
+  padding: 216px 0 120px;
+}
+
+.unauthorized__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.unauthorized__img {
+    width: 320px;
+}
+
+@media screen and (max-width: 1023px) {
+  .unauthorized {
+    padding: 0 24px;
+  }
+}

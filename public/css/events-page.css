@@ -1,9 +1,9 @@
-header {
+.header {
   background-color: var(--header-bg-scroll) !important;
 }
 
 .events {
-  margin: 216px 0 120px;
+  padding: 216px 0 120px;
 }
 
 @media screen and (max-width: 1023px) {
