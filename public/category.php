@@ -32,7 +32,6 @@ if (isset($_GET["id"])) {
     $categoryError = "Category not found";
 }
 
-
 mysqli_close($connection);
 
 ?>
@@ -78,6 +77,14 @@ mysqli_close($connection);
             <div class='category__content'>
                 <div class='container'>
                     <div id='events'></div>
+
+                    <div class='feedback-container'>
+                        <i class='spinner' id='spinner'>
+                            <?php echo file_get_contents($rootDirectory . '/event-management/public/images/icons/spinner.svg') ?>
+                        </i>
+
+                        <p class='text--danger' id='feedback'></p>
+                    </div>
                 </div>
             </div>
             ";

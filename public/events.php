@@ -35,6 +35,14 @@ if (!isset($_SESSION)) {
     <div class="events">
         <div class="container">
             <div id="events"></div>
+
+            <div class="feedback-container">
+                <i class="spinner" id="spinner">
+                    <?php echo file_get_contents($rootDirectory . "/event-management/public/images/icons/spinner.svg") ?>
+                </i>
+
+                <p class="text--danger" id="feedback"></p>
+            </div>
         </div>
     </div>
 
