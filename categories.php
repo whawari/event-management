@@ -3,9 +3,8 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-$rootDir = $_SERVER["DOCUMENT_ROOT"];
-require_once $rootDir . "/event-management/config/db-connect.php";
-require_once $rootDir . "/event-management/helpers/getCategories.php";
+require_once "config/db-connect.php";
+require_once "helpers/getCategories.php";
 
 $categories = getCategories($connection);
 ?>
@@ -23,14 +22,14 @@ $categories = getCategories($connection);
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
 
     <!-- Custom styles -->
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/categories-page.css">
+    <link rel="stylesheet" href="public/css/index.css">
+    <link rel="stylesheet" href="public/css/categories-page.css">
 
     <title>EventHub - Categories</title>
 </head>
 
 <body>
-    <?php include "../templates/header.php"; ?>
+    <?php require_once "templates/header.php"; ?>
 
     <div class="categories">
         <div class="container">
@@ -43,7 +42,7 @@ $categories = getCategories($connection);
 
                 if (hasPermission($createCategory)) {
                     echo "
-                <a href='/event-management/public/dashboard/create-category.php' class='button button--primary'>
+                <a href='dashboard/create-category.php' class='button button--primary'>
                     Add category
                 </a>
                 ";
@@ -62,7 +61,7 @@ $categories = getCategories($connection);
                     echo "
                     <div class='categories__grid__item'>
                         <a href='category.php?id=$categoryId' class='categories__grid__item__img-box text--dark'>
-                            <img src='images/uploads/$categoryImage' alt='$categoryName' class='categories__grid__item__img'>
+                            <img src='public/images/uploads/$categoryImage' alt='$categoryName' class='categories__grid__item__img'>
                         </a>
 
                         <a href='category.php?id=$categoryId' class='categories__grid__item__name-box text--dark'>
@@ -78,11 +77,11 @@ $categories = getCategories($connection);
         </div>
     </div>
 
-    <?php include "../templates/footer.php"; ?>
+    <?php require_once "templates/footer.php"; ?>
 
     <?php
     if (isset($_SESSION["loggedUserId"])) {
-        include "../templates/dashboard-floating-button.php";
+        require_once "templates/dashboard-floating-button.php";
     }
     ?>
 </body>

@@ -15,6 +15,8 @@ if (isset($_SESSION["loginErrors"])) {
 
     unset($_SESSION["loginErrors"]);
 }
+
+require_once "config/root-directory.php";
 ?>
 
 <!DOCTYPE html>
@@ -30,9 +32,9 @@ if (isset($_SESSION["loginErrors"])) {
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
 
     <!-- Custom styles -->
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/form.css">
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="public/css/index.css">
+    <link rel="stylesheet" href="public/css/form.css">
+    <link rel="stylesheet" href="public/css/login.css">
 
     <title>EventHub - Log In</title>
 </head>
@@ -41,13 +43,13 @@ if (isset($_SESSION["loginErrors"])) {
     <main class="login">
         <div class="login__container">
             <div class="content">
-                <a href="../public/" class="content__logo">
-                    <img src="./images/logo.svg" alt="logo" class="content__logo__img">
+                <a href="<?php echo $rootDirectory ?>" class="content__logo">
+                    <img src="public/images/logo.svg" alt="logo" class="content__logo__img">
                 </a>
 
                 <h1>Log in</h1>
 
-                <form method="post" action="../includes/login.php" class="form">
+                <form method="post" action="includes/login.php" class="form">
                     <div class="form__field">
                         <label for="email" class="form__field__label">Email</label>
 

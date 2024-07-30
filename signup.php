@@ -22,7 +22,8 @@ if (isset($_SESSION["signupData"])) {
     unset($_SESSION["signupData"]);
 }
 
-require_once "../config/roles.php";
+require_once "config/root-directory.php";
+require_once "config/roles.php";
 ?>
 
 <!DOCTYPE html>
@@ -38,9 +39,9 @@ require_once "../config/roles.php";
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
 
     <!-- Custom styles -->
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/form.css">
-    <link rel="stylesheet" href="css/signup.css">
+    <link rel="stylesheet" href="public/css/index.css">
+    <link rel="stylesheet" href="public/css/form.css">
+    <link rel="stylesheet" href="public/css/signup.css">
 
     <title>EventHub | Sign Up</title>
 </head>
@@ -49,13 +50,13 @@ require_once "../config/roles.php";
     <main class="signup">
         <div class="signup__container">
             <div class="content">
-                <a href="../public/" class="content__logo">
-                    <img src="./images/logo.svg" alt="logo" class="content__logo__img">
+                <a href="<?php echo $rootDirectory ?>" class="content__logo">
+                    <img src="public/images/logo.svg" alt="logo" class="content__logo__img">
                 </a>
 
                 <h1>Sign up</h1>
 
-                <form method="post" action="../includes/signup.php" class="form">
+                <form method="post" action="includes/signup.php" class="form">
                     <div class="form__field">
                         <label for="name" title="Required" class="form__field__label">
                             Name <span class="form__field__label__required">*</span>
@@ -143,7 +144,6 @@ require_once "../config/roles.php";
                         echo "<p class='body2 text--danger form__error'>" . $errors["generalError"] . "</p>";
                     }
                     ?>
-
 
                     <button type="submit" class="button button--primary full-width form__button">Sign up</button>
                 </form>

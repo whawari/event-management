@@ -3,14 +3,12 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-$rootDirectory = $_SERVER['DOCUMENT_ROOT'];
-
 if (!isset($_SESSION["loggedUserId"])) {
     header("location: ../login.php");
     exit();
 } else {
-    require_once $rootDirectory . "/event-management/config/permissions.php";
-    require_once $rootDirectory . "/event-management/helpers/hasPermission.php";
+    require_once "../config/permissions.php";
+    require_once "../helpers/hasPermission.php";
 
     if (!isset($_SESSION["loggedUserPermissions"]) || !hasPermission($editCategory)) {
         header("location: ../unauthorized.php");
@@ -18,8 +16,8 @@ if (!isset($_SESSION["loggedUserId"])) {
     }
 }
 
-require_once $rootDirectory . "/event-management/config/db-connect.php";
-require_once $rootDirectory . "/event-management/helpers/getCategoryById.php";
+require_once "../config/db-connect.php";
+require_once "../helpers/getCategoryById.php";
 
 $categoryId = isset($_GET["id"]) ? $_GET["id"] : "";
 if (empty($categoryId)) {
@@ -62,16 +60,14 @@ if (isset($_SESSION["errors"])) {
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
 
     <!-- Custom styles -->
-    <link rel="stylesheet" href="../css/index.css">
-    <link rel="stylesheet" href="../css/sidebar.css">
-    <link rel="stylesheet" href="../css/form.css">
-    <link rel="stylesheet" href="../css/snackbar.css">
+    <link rel="stylesheet" href="../public/css/index.css">
+    <link rel="stylesheet" href="../public/css/sidebar.css">
+    <link rel="stylesheet" href="../public/css/form.css">
+    <link rel="stylesheet" href="../public/css/snackbar.css">
 </head>
 
 <body>
-    <?php
-    include "../../templates/sidebar.php";
-    ?>
+    <?php require_once "../templates/sidebar.php"; ?>
 
     <div class="panel">
         <div class="sidebar-whitespace"></div>
@@ -110,7 +106,7 @@ if (isset($_SESSION["errors"])) {
             ?>
                 <div class="container">
                     <div class="card">
-                        <form action="../../includes/editCategory.php" method="post" enctype="multipart/form-data" class="form">
+                        <form action="../includes/editCategory.php" method="post" enctype="multipart/form-data" class="form">
                             <!-- not secure -->
                             <input type="hidden" name="categoryId" value="<?php echo $categoryId ?>">
 
@@ -139,12 +135,12 @@ if (isset($_SESSION["errors"])) {
                                     <input type="hidden" name="oldImageName" value="<?php echo isset($data['image_name']) ? $data['image_name'] : '' ?>">
 
                                     <i class="form_field_file_icon">
-                                        <?php echo file_get_contents($rootDirectory . "/event-management/public/images/icons/upload.svg") ?>
+                                        <?php echo file_get_contents("../public/images/icons/upload.svg") ?>
                                     </i>
 
                                     <span class="form__field__file__title">Select image</span>
 
-                                    <img src="<?php echo isset($data['image_name']) ? '/event-management/public/images/uploads/' . $data['image_name'] : '#' ?>" style="<?php echo isset($data['image_name']) ? 'display: block;' : '' ?>" alt="Image preview" class="form__field__file__img">
+                                    <img src="<?php echo isset($data['image_name']) ? '../public/images/uploads/' . $data['image_name'] : '#' ?>" style="<?php echo isset($data['image_name']) ? 'display: block;' : '' ?>" alt="Image preview" class="form__field__file__img">
                                 </label>
 
                                 <p class="body2 form__field__info">Upload a JPG, JPEG, PNG or WEBP image of a maximum size of 2 MB</p>
@@ -188,10 +184,10 @@ if (isset($_SESSION["errors"])) {
         </main>
     </div>
 
-    <script src="/event-management/public/js/sidebar.js"></script>
-    <script src="/event-management/public/js/preview-image.js"></script>
-    <script src="/event-management/public/js/trigger-button-click.js"></script>
-    <script src="/event-management/public/js/snackbar-handler.js"></script>
+    <script src="../public/js/sidebar.js"></script>
+    <script src="../public/js/preview-image.js"></script>
+    <script src="../public/js/trigger-button-click.js"></script>
+    <script src="../public/js/snackbar-handler.js"></script>
 </body>
 
 </html>

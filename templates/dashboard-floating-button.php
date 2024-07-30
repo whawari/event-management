@@ -1,13 +1,11 @@
-<?php
-$rootDirectory = $_SERVER['DOCUMENT_ROOT'];
-?>
+<?php require_once __DIR__ . "/../config/root-directory.php"; ?>
 
-<link rel="stylesheet" href="../public/css/floating-button.css">
+<link rel="stylesheet" href="<?php echo $rootDirectory . 'public/css/floating-button.css' ?>">
 
 <div class="floating-button" title="Dashboard">
-    <a href="/event-management/public/dashboard" class="floating-button__anchor">
+    <a href="<?php echo $rootDirectory . 'dashboard' ?>" class="floating-button__anchor">
         <i class="floating-button__icon">
-            <?php echo file_get_contents($rootDirectory . "/event-management/public/images/icons/dashboard.svg") ?>
+            <?php echo file_get_contents(__DIR__ . "/../public/images/icons/dashboard.svg") ?>
         </i>
     </a>
 </div>

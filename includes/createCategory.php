@@ -13,7 +13,7 @@ if (
     !hasPermission($createCategory) ||
     $_SERVER["REQUEST_METHOD"] !== "POST"
 ) {
-    header("location: ../public/unauthorized.php");
+    header("location: ../unauthorized.php");
     exit();
 }
 
@@ -42,7 +42,7 @@ if ($errors) {
         "name" => $name,
     ];
 
-    header("Location: ../public/dashboard/create-category.php");
+    header("Location: ../dashboard/create-category.php");
     exit();
 }
 
@@ -108,5 +108,5 @@ try {
 mysqli_autocommit($connection, TRUE);
 mysqli_close($connection);
 
-header("Location: ../public/dashboard/create-category.php");
+header("Location: ../dashboard/create-category.php");
 exit();

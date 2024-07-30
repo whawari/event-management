@@ -76,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             "confirmPassword" => $confirmPassword,
         ];
 
-        header("Location: ../public/signup.php");
+        header("Location: ../signup.php");
 
         die();
     }
@@ -133,7 +133,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         mysqli_autocommit($connection, TRUE);
         mysqli_close($connection);
 
-        header("Location: ../public");
+        header("Location: ../");
         exit();
     } catch (Exception $e) {
         mysqli_rollback($connection);
@@ -145,10 +145,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         mysqli_autocommit($connection, TRUE);
         mysqli_close($connection);
 
-        header("Location: ../public/signup.php");
+        header("Location: ../signup.php");
         exit();
     }
 } else {
-    header("Location: ../public");
+    header("Location: ../");
     die();
 }

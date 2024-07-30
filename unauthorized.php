@@ -3,9 +3,7 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-$rootDir = $_SERVER["DOCUMENT_ROOT"];
-
-$forbiddenImg = file_get_contents($rootDir . "/event-management/public/images/forbidden.svg");
+$forbiddenImg = file_get_contents("public/images/forbidden.svg");
 
 ?>
 
@@ -22,15 +20,15 @@ $forbiddenImg = file_get_contents($rootDir . "/event-management/public/images/fo
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
 
     <!-- Custom styles -->
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/unauthorized.css">
+    <link rel="stylesheet" href="public/css/index.css">
+    <link rel="stylesheet" href="public/css/unauthorized.css">
 
     <title>EventHub - Permission Denied</title>
 </head>
 
 <body>
 
-    <?php include "../templates/header.php"; ?>
+    <?php require_once "templates/header.php"; ?>
 
     <div class="unauthorized">
         <div class="container">
@@ -46,11 +44,11 @@ $forbiddenImg = file_get_contents($rootDir . "/event-management/public/images/fo
         </div>
     </div>
 
-    <?php include "../templates/footer.php"; ?>
+    <?php require_once "templates/footer.php"; ?>
 
     <?php
     if (isset($_SESSION["loggedUserId"])) {
-        include "../templates/dashboard-floating-button.php";
+        require_once "templates/dashboard-floating-button.php";
     }
     ?>
 </body>

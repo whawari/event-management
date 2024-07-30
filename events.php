@@ -2,21 +2,6 @@
 if (!isset($_SESSION)) {
     session_start();
 }
-
-$rootDir = $_SERVER["DOCUMENT_ROOT"];
-
-$attendIcon = file_get_contents($rootDir . "/event-management/public/images/icons/attend.svg");
-$attendedIcon = file_get_contents($rootDir . "/event-management/public/images/icons/attended.svg");
-$attendingIcon = file_get_contents($rootDir . "/event-management/public/images/icons/attending.svg");
-
-$eventId = "";
-$eventError = "";
-
-if (isset($_GET["id"])) {
-    $eventId = $_GET["id"];
-} else {
-    $eventError = "Event not found";
-}
 ?>
 
 <!DOCTYPE html>
@@ -32,73 +17,46 @@ if (isset($_GET["id"])) {
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
 
     <!-- Custom styles -->
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/events.css">
-    <link rel="stylesheet" href="css/snackbar.css">
-    <link rel="stylesheet" href="css/event-page.css">
+    <link rel="stylesheet" href="public/css/index.css">
+    <link rel="stylesheet" href="public/css/events.css">
+    <link rel="stylesheet" href="public/css/snackbar.css">
+    <link rel="stylesheet" href="public/css/events-page.css">
 
     <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
-    <title>EventHub - Event</title>
+    <title>EventHub - Events</title>
 </head>
 
 <body>
 
-    <?php include "../templates/header.php"; ?>
+    <?php require_once "templates/header.php"; ?>
 
-    <div class="event">
-        <div class="event__content" id="event-content"></div>
+    <div class="events">
+        <div class="container">
+            <div id="events"></div>
 
-        <?php
-        if (!$eventError) {
-            echo "
-            <div class='feedback-container'>
-                <i class='spinner' id='spinner'>
-                    <?php echo file_get_contents($rootDirectory . '/event-management/public/images/icons/spinner.svg') ?>
+            <div class="feedback-container">
+                <i class="spinner" id="spinner">
+                    <?php echo file_get_contents("public/images/icons/spinner.svg") ?>
                 </i>
 
-                <p class='text--danger' id='feedback'></p>
+                <p class="text--danger" id="feedback"></p>
             </div>
-            ";
-        } else {
-            echo "
-            <div class='event__error container'>
-                <p class='text--danger'>$eventError</p>
-
-                <a href='events.php' class='button button--primary'>Browse events</a>
-            </div>
-            ";
-        }
-        ?>
-
-        <div class="snackbar" id="snackbar">
-            <p class="snackbar__text text--light body2" id="snackbar-message"></p>
-
-            <button type="button" class="snackbar__close" id="snackbar-close">
-                <span class="snackbar__close__slice"></span>
-                <span class="snackbar__close__slice"></span>
-            </button>
         </div>
     </div>
 
-    <?php include "../templates/footer.php"; ?>
+    <?php require_once "templates/footer.php"; ?>
 
     <?php
     if (isset($_SESSION["loggedUserId"])) {
-        include "../templates/dashboard-floating-button.php";
+        require_once "templates/dashboard-floating-button.php";
     }
     ?>
 
     <script type="text/javascript">
         $(document).ready(function() {
-            <?php
-            if ($eventId) {
-            ?>
-                fetchEvent();
-            <?php
-            }
-            ?>
+            fetchEvents();
 
             $(document).on("click", "#snackbar-close", function() {
                 hideSnackbar();
@@ -113,17 +71,16 @@ if (isset($_GET["id"])) {
             })
         });
 
-        function fetchEvent() {
+        function fetchEvents() {
             $.ajax({
-                url: "../includes/viewEvent.php",
+                url: "includes/viewEvents.php",
                 method: "GET",
                 data: {
-                    action: "fetchEvent",
-                    eventId: <?php echo $eventId ? $eventId : "null" ?>
-
+                    action: "fetchEvents",
+                    requestLocation: "events"
                 },
                 success: function(data) {
-                    $('#event-content').html(data);
+                    $('#events').html(data);
                 },
                 error: function(xhr) {
                     $('#feedback').show();
@@ -138,7 +95,7 @@ if (isset($_GET["id"])) {
 
         function attendEvent($eventId) {
             $.ajax({
-                url: "../includes/attendEvent.php",
+                url: "includes/attendEvent.php",
                 method: "GET",
                 data: {
                     action: "attendEvent",
@@ -147,7 +104,7 @@ if (isset($_GET["id"])) {
                 success: function(data) {
                     showSnackbar(data, "success");
 
-                    fetchEvent();
+                    fetchEvents();
                 },
                 error: function(xhr) {
                     showSnackbar(xhr.responseText, "danger");
@@ -162,7 +119,7 @@ if (isset($_GET["id"])) {
 
         function unattendEvent($eventId) {
             $.ajax({
-                url: "../includes/unattendEvent.php",
+                url: "includes/unattendEvent.php",
                 method: "GET",
                 data: {
                     action: "attendEvent",
@@ -171,7 +128,7 @@ if (isset($_GET["id"])) {
                 success: function(data) {
                     showSnackbar(data, "success");
 
-                    fetchEvent();
+                    fetchEvents();
                 },
                 error: function(xhr) {
                     showSnackbar(xhr.responseText, "danger");

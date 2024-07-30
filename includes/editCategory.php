@@ -13,7 +13,7 @@ if (
     !hasPermission($editCategory) ||
     $_SERVER["REQUEST_METHOD"] !== "POST"
 ) {
-    header("location: ../public/unauthorized.php");
+    header("location: ../unauthorized.php");
     exit();
 }
 
@@ -48,7 +48,7 @@ if ($errors) {
         "name" => $name,
     ];
 
-    header("Location: ../public/dashboard/edit-category.php?id=$categoryId");
+    header("Location: ../dashboard/edit-category.php?id=$categoryId");
     exit();
 }
 
@@ -126,5 +126,5 @@ try {
 mysqli_autocommit($connection, TRUE);
 mysqli_close($connection);
 
-header("Location: ../public/dashboard/edit-category.php?id=$categoryId");
+header("Location: ../dashboard/edit-category.php?id=$categoryId");
 exit();

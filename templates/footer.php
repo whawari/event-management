@@ -1,11 +1,11 @@
 <?php
-$rootDir = $_SERVER["DOCUMENT_ROOT"];
+require_once __DIR__ . "/../config/root-directory.php";
 
-$githubIcon = file_get_contents($rootDir . "/event-management/public/images/icons/github.svg");
-$linkedinIcon = file_get_contents($rootDir . "/event-management/public/images/icons/linkedin.svg");
+$githubIcon = file_get_contents(__DIR__ . "/../public/images/icons/github.svg");
+$linkedinIcon = file_get_contents(__DIR__ . "/../public/images/icons/linkedin.svg");
 ?>
 
-<link rel="stylesheet" href="/event-management/public/css/footer.css">
+<link rel="stylesheet" href="<?php echo $rootDirectory . 'public/css/footer.css' ?>">
 
 <footer class="footer">
     <div class="container">

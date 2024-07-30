@@ -13,7 +13,7 @@ if (
     !hasPermission($createEvent) ||
     $_SERVER["REQUEST_METHOD"] !== "POST"
 ) {
-    header("location: ../public/unauthorized.php");
+    header("location: ../unauthorized.php");
     exit();
 }
 
@@ -74,7 +74,7 @@ if ($errors) {
         "location" => $location,
     ];
 
-    header("Location: ../public/dashboard/create-event.php");
+    header("Location: ../dashboard/create-event.php");
     exit();
 }
 
@@ -141,5 +141,5 @@ try {
 mysqli_autocommit($connection, TRUE);
 mysqli_close($connection);
 
-header("Location: ../public/dashboard/create-event.php");
+header("Location: ../dashboard/create-event.php");
 exit();

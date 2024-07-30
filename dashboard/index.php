@@ -9,27 +9,27 @@ if (!isset($_SESSION["loggedUserId"])) {
     exit();
 }
 
-$rootDirectory = $_SERVER['DOCUMENT_ROOT'];
+require_once __DIR__ . "/../config/root-directory.php";
+require_once __DIR__ . "/../config/roles.php";
 
-$analyticsImg = file_get_contents($rootDirectory . "/event-management/public/images/analytics.svg");
-
-require_once $rootDirectory . "/event-management/config/roles.php";
+$analyticsImg = file_get_contents(__DIR__ . "/../public/images/analytics.svg");
 
 $adminView = "
 <p class='mt-24'>As an admin you can create, edit, and delete categories.</p>
-<a href='/event-management/public/dashboard/create-category.php' class='button button--primary'>Add category</a>
+<p>Also, you can view all events created on the website!</p>
+<a href='create-category.php' class='button button--primary mt-24'>Add category</a>
 ";
 
 $organizerView = "
 <p class='mt-24'>As an organizer you can create, edit, and delete events.</p>
 <p>Also, you can view events that you have created!</p>
-<a href='/event-management/public/dashboard/create-event.php' class='button button--primary mt-24'>Add event</a>
+<a href='create-event.php' class='button button--primary mt-24'>Add event</a>
 ";
 
 $userView = "
 <p class='mt-24'>Do not miss on events that you are going to attend.</p>
 <p>Click the button below to view attending events!</p>
-<a href='/event-management/public/dashboard/events.php' class='button button--primary mt-24'>Events</a>
+<a href='events.php' class='button button--primary mt-24'>Events</a>
 ";
 
 $loggedUserView = "";
@@ -60,15 +60,13 @@ switch ($_SESSION["loggedUserRole"]) {
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
 
     <!-- Custom styles -->
-    <link rel="stylesheet" href="../css/index.css">
-    <link rel="stylesheet" href="../css/sidebar.css">
-    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../public/css/index.css">
+    <link rel="stylesheet" href="../public/css/sidebar.css">
+    <link rel="stylesheet" href="../public/css/dashboard.css">
 </head>
 
 <body>
-    <?php
-    include "../../templates/sidebar.php";
-    ?>
+    <?php require_once "../templates/sidebar.php"; ?>
 
     <div class="panel">
         <div class="sidebar-whitespace"></div>
@@ -97,7 +95,7 @@ switch ($_SESSION["loggedUserRole"]) {
         </main>
     </div>
 
-    <script src="/event-management/public/js/sidebar.js"></script>
+    <script src="../public/js/sidebar.js"></script>
 </body>
 
 </html>

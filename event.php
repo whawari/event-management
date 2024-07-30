@@ -3,37 +3,18 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-$rootDir = $_SERVER["DOCUMENT_ROOT"];
-require_once $rootDir . "/event-management/config/db-connect.php";
-require_once $rootDir . "/event-management/helpers/getCategoryById.php";
+$attendIcon = file_get_contents("public/images/icons/attend.svg");
+$attendedIcon = file_get_contents("public/images/icons/attended.svg");
+$attendingIcon = file_get_contents("public/images/icons/attending.svg");
 
-$attendIcon = file_get_contents($rootDir . "/event-management/public/images/icons/attend.svg");
-$attendedIcon = file_get_contents($rootDir . "/event-management/public/images/icons/attended.svg");
-$attendingIcon = file_get_contents($rootDir . "/event-management/public/images/icons/attending.svg");
-
-$categoryId = "";
-$categoryName = "";
-$categoryImage = "";
-$categoryError = "";
-$category = array();
+$eventId = "";
+$eventError = "";
 
 if (isset($_GET["id"])) {
-    $categoryId = $_GET["id"];
-
-    $category = getCategoryById($connection, $categoryId ?? "null");
-
-    if (isset($category["error"])) {
-        $categoryError = $category["error"];
-    } else {
-        $categoryName = $category["name"];
-        $categoryImage = $category["image_name"];
-    }
+    $eventId = $_GET["id"];
 } else {
-    $categoryError = "Category not found";
+    $eventError = "Event not found";
 }
-
-mysqli_close($connection);
-
 ?>
 
 <!DOCTYPE html>
@@ -49,73 +30,70 @@ mysqli_close($connection);
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
 
     <!-- Custom styles -->
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/events.css">
-    <link rel="stylesheet" href="css/snackbar.css">
-    <link rel="stylesheet" href="css/category-page.css">
+    <link rel="stylesheet" href="public/css/index.css">
+    <link rel="stylesheet" href="public/css/events.css">
+    <link rel="stylesheet" href="public/css/snackbar.css">
+    <link rel="stylesheet" href="public/css/event-page.css">
 
     <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
-    <title>EventHub - Category<?php echo $categoryName ? " | " . $categoryName : "" ?></title>
+    <title>EventHub - Event</title>
 </head>
 
 <body>
 
-    <?php include "../templates/header.php"; ?>
+    <?php require_once "templates/header.php"; ?>
 
-    <div class="category">
+    <div class="event">
+        <div class="event__content" id="event-content"></div>
+
         <?php
-        if ($category && !$categoryError) {
+        if (!$eventError) {
             echo "
-            <div class='category__header' style='background-image: url(images/uploads/$categoryImage);'>
-                <div class='category__header__overlay'>
-                    <h1 class='text--large text--light text--center'>$categoryName</h1>
-                </div>
-            </div>
+            <div class='feedback-container'>
+                <i class='spinner' id='spinner'>
+                    <?php echo file_get_contents('public/images/icons/spinner.svg') ?>
+                </i>
 
-            <div class='category__content'>
-                <div class='container'>
-                    <div id='events'></div>
-
-                    <div class='feedback-container'>
-                        <i class='spinner' id='spinner'>
-                            <?php echo file_get_contents($rootDirectory . '/event-management/public/images/icons/spinner.svg') ?>
-                        </i>
-
-                        <p class='text--danger' id='feedback'></p>
-                    </div>
-                </div>
+                <p class='text--danger' id='feedback'></p>
             </div>
             ";
         } else {
             echo "
-            <div class='category__error container'>
-                <p class='text--danger'>$categoryError</p>
+            <div class='event__error container'>
+                <p class='text--danger'>$eventError</p>
 
-                <a href='categories.php' class='button button--primary'>Browse categories</a>
+                <a href='events.php' class='button button--primary'>Browse events</a>
             </div>
             ";
         }
         ?>
 
+        <div class="snackbar" id="snackbar">
+            <p class="snackbar__text text--light body2" id="snackbar-message"></p>
 
+            <button type="button" class="snackbar__close" id="snackbar-close">
+                <span class="snackbar__close__slice"></span>
+                <span class="snackbar__close__slice"></span>
+            </button>
+        </div>
     </div>
 
-    <?php include "../templates/footer.php"; ?>
+    <?php require_once "templates/footer.php"; ?>
 
     <?php
     if (isset($_SESSION["loggedUserId"])) {
-        include "../templates/dashboard-floating-button.php";
+        require_once "templates/dashboard-floating-button.php";
     }
     ?>
 
     <script type="text/javascript">
         $(document).ready(function() {
             <?php
-            if (!$categoryError && $categoryId) {
+            if ($eventId) {
             ?>
-                fetchEvents();
+                fetchEvent();
             <?php
             }
             ?>
@@ -133,18 +111,17 @@ mysqli_close($connection);
             })
         });
 
-        function fetchEvents() {
+        function fetchEvent() {
             $.ajax({
-                url: "../includes/viewEvents.php",
+                url: "includes/viewEvent.php",
                 method: "GET",
                 data: {
-                    action: "fetchEvents",
-                    requestLocation: "category",
-                    categoryId: <?php echo $categoryId ? $categoryId : "null" ?>
+                    action: "fetchEvent",
+                    eventId: <?php echo $eventId ? $eventId : "null" ?>
 
                 },
                 success: function(data) {
-                    $('#events').html(data);
+                    $('#event-content').html(data);
                 },
                 error: function(xhr) {
                     $('#feedback').show();
@@ -159,7 +136,7 @@ mysqli_close($connection);
 
         function attendEvent($eventId) {
             $.ajax({
-                url: "../includes/attendEvent.php",
+                url: "includes/attendEvent.php",
                 method: "GET",
                 data: {
                     action: "attendEvent",
@@ -168,7 +145,7 @@ mysqli_close($connection);
                 success: function(data) {
                     showSnackbar(data, "success");
 
-                    fetchEvents();
+                    fetchEvent();
                 },
                 error: function(xhr) {
                     showSnackbar(xhr.responseText, "danger");
@@ -183,7 +160,7 @@ mysqli_close($connection);
 
         function unattendEvent($eventId) {
             $.ajax({
-                url: "../includes/unattendEvent.php",
+                url: "includes/unattendEvent.php",
                 method: "GET",
                 data: {
                     action: "attendEvent",
@@ -192,7 +169,7 @@ mysqli_close($connection);
                 success: function(data) {
                     showSnackbar(data, "success");
 
-                    fetchEvents();
+                    fetchEvent();
                 },
                 error: function(xhr) {
                     showSnackbar(xhr.responseText, "danger");

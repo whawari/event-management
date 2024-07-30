@@ -3,15 +3,14 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-$rootDir = $_SERVER["DOCUMENT_ROOT"];
-require_once $rootDir . "/event-management/config/db-connect.php";
-require_once $rootDir . "/event-management/helpers/getCategories.php";
+require_once "config/db-connect.php";
+require_once "helpers/getCategories.php";
 
 $categories = getCategories($connection);
 
-$attendIcon = file_get_contents($rootDir . "/event-management/public/images/icons/attend.svg");
-$attendedIcon = file_get_contents($rootDir . "/event-management/public/images/icons/attended.svg");
-$attendingIcon = file_get_contents($rootDir . "/event-management/public/images/icons/attending.svg");
+$attendIcon = file_get_contents("public/images/icons/attend.svg");
+$attendedIcon = file_get_contents("public/images/icons/attended.svg");
+$attendingIcon = file_get_contents("public/images/icons/attending.svg");
 
 ?>
 
@@ -28,10 +27,10 @@ $attendingIcon = file_get_contents($rootDir . "/event-management/public/images/i
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
 
     <!-- Custom styles -->
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/homepage.css">
-    <link rel="stylesheet" href="css/events.css">
-    <link rel="stylesheet" href="css/snackbar.css">
+    <link rel="stylesheet" href="public/css/index.css">
+    <link rel="stylesheet" href="public/css/homepage.css">
+    <link rel="stylesheet" href="public/css/events.css">
+    <link rel="stylesheet" href="public/css/snackbar.css">
 
     <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -40,7 +39,7 @@ $attendingIcon = file_get_contents($rootDir . "/event-management/public/images/i
 </head>
 
 <body>
-    <?php include "../templates/header.php"; ?>
+    <?php require_once "templates/header.php"; ?>
 
     <div class="hero">
         <h1 class="text--large text--light text--center">
@@ -70,7 +69,7 @@ $attendingIcon = file_get_contents($rootDir . "/event-management/public/images/i
 
             if (hasPermission($createCategory)) {
                 echo "
-                <a href='/event-management/public/dashboard/create-category.php' class='button button--primary'>
+                <a href='/dashboard/create-category.php' class='button button--primary'>
                     Add category
                 </a>
                 ";
@@ -89,7 +88,7 @@ $attendingIcon = file_get_contents($rootDir . "/event-management/public/images/i
                 echo "
                     <div class='home-categories__grid__item'>
                         <a href='category.php?id=$categoryId' class='home-categories__grid__item__anchor text--light'>
-                            <img src='images/uploads/$categoryImage' alt='$categoryName' class='home-categories__grid__item__img'>
+                            <img src='public/images/uploads/$categoryImage' alt='$categoryName' class='home-categories__grid__item__img'>
 
                             <h5 class='home-categories__grid__item__name'>$categoryName</h5>
                         </a>
@@ -119,7 +118,7 @@ $attendingIcon = file_get_contents($rootDir . "/event-management/public/images/i
 
             <div class="feedback-container">
                 <i class="spinner" id="spinner">
-                    <?php echo file_get_contents($rootDirectory . "/event-management/public/images/icons/spinner.svg") ?>
+                    <?php echo file_get_contents("public/images/icons/spinner.svg") ?>
                 </i>
 
                 <p class="text--danger" id="feedback"></p>
@@ -127,7 +126,7 @@ $attendingIcon = file_get_contents($rootDir . "/event-management/public/images/i
         </div>
     </div>
 
-    <?php include "../templates/footer.php"; ?>
+    <?php require_once "templates/footer.php"; ?>
 
     <div class="snackbar" id="snackbar">
         <p class="snackbar__text text--light body2" id="snackbar-message"></p>
@@ -140,7 +139,7 @@ $attendingIcon = file_get_contents($rootDir . "/event-management/public/images/i
 
     <?php
     if (isset($_SESSION["loggedUserId"])) {
-        include "../templates/dashboard-floating-button.php";
+        require_once "templates/dashboard-floating-button.php";
     }
     ?>
 
@@ -163,7 +162,7 @@ $attendingIcon = file_get_contents($rootDir . "/event-management/public/images/i
 
         function fetchEvents() {
             $.ajax({
-                url: "../includes/viewEvents.php",
+                url: "includes/viewEvents.php",
                 method: "GET",
                 data: {
                     action: "fetchEvents",
@@ -185,7 +184,7 @@ $attendingIcon = file_get_contents($rootDir . "/event-management/public/images/i
 
         function attendEvent($eventId) {
             $.ajax({
-                url: "../includes/attendEvent.php",
+                url: "includes/attendEvent.php",
                 method: "GET",
                 data: {
                     action: "attendEvent",
@@ -209,7 +208,7 @@ $attendingIcon = file_get_contents($rootDir . "/event-management/public/images/i
 
         function unattendEvent($eventId) {
             $.ajax({
-                url: "../includes/unattendEvent.php",
+                url: "includes/unattendEvent.php",
                 method: "GET",
                 data: {
                     action: "attendEvent",

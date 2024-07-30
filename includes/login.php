@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($errors) {
         $_SESSION['loginErrors'] = $errors;
 
-        header("Location: ../public/login.php");
+        header("Location: ../login.php");
 
         die();
     }
@@ -44,9 +44,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         require_once "../config/roles.php";
 
         if ($userDetails["role_code"] === $admin) {
-            header("Location: ../public/dashboard");
+            header("Location: ../dashboard");
         } else {
-            header("Location: ../public");
+            header("Location: ../");
         }
 
         exit();
@@ -55,10 +55,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $_SESSION['loginErrors'] = $errors;
 
-        header("Location: ../public/login.php");
+        header("Location: ../login.php");
         exit();
     }
 } else {
-    header("Location: ../public");
+    header("Location: ../");
     die();
 }

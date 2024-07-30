@@ -13,7 +13,7 @@ if (
     !hasPermission($editEvent) ||
     $_SERVER["REQUEST_METHOD"] !== "POST"
 ) {
-    header("location: ../public/unauthorized.php");
+    header("location: ../unauthorized.php");
     exit();
 }
 
@@ -75,7 +75,7 @@ if ($isFileUploaded) {
 if ($errors) {
     $_SESSION['errors'] = $errors;
 
-    header("Location: ../public/dashboard/edit-event.php?id=$eventId");
+    header("Location: ../dashboard/edit-event.php?id=$eventId");
     exit();
 }
 
@@ -158,5 +158,5 @@ try {
 mysqli_autocommit($connection, TRUE);
 mysqli_close($connection);
 
-header("Location: ../public/dashboard/edit-event.php?id=$eventId");
+header("Location: ../dashboard/edit-event.php?id=$eventId");
 exit();

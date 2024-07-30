@@ -1,6 +1,6 @@
 <?php
-$rootDir = $_SERVER["DOCUMENT_ROOT"];
-require_once $rootDir . "/event-management/config/db-connect.php";
+require_once "../config/root-directory.php";
+require_once "../config/db-connect.php";
 
 if (isset($_GET["action"]) && $_GET["action"] == "fetchCategories") {
     $categories = array();
@@ -15,10 +15,10 @@ if (isset($_GET["action"]) && $_GET["action"] == "fetchCategories") {
         $count = mysqli_num_rows($result);
 
         if ($count) {
-            $uploadsFolderDirectory = "/event-management/public/images/uploads/";
+            $uploadsFolderDirectory = $rootDirectory . "public/images/uploads/";
 
-            $editIcon = file_get_contents($rootDir . '/event-management/public/images/icons/edit.svg');
-            $deleteIcon = file_get_contents($rootDir . '/event-management/public/images/icons/delete.svg');
+            $editIcon = file_get_contents('../public/images/icons/edit.svg');
+            $deleteIcon = file_get_contents('../public/images/icons/delete.svg');
 
             echo "<div class='categories-grid'>";
             while ($category = mysqli_fetch_assoc($result)) {
@@ -29,13 +29,17 @@ if (isset($_GET["action"]) && $_GET["action"] == "fetchCategories") {
 
                 echo "
                     <div class='categories-grid__item'>
-                        <img src='$imageSrc' alt='$imageName' class='categories-grid__item__img' >
+                        <a href='" . $rootDirectory . "category.php?id=$categoryId' class='categories-grid__item__anchor'>
+                            <img src='$imageSrc' alt='$imageName' class='categories-grid__item__img' >
+                        </a>
     
                         <div class='categories-grid__item__footer'>
-                            <p class='subtitle'>$categoryName</p>
+                            <a href='" . $rootDirectory . "category.php?id=$categoryId' class='text--dark'>
+                                <p class='subtitle'>$categoryName</p>
+                            </a>
     
                             <div class='categories-grid__item__footer__ctas'>
-                                <a href='/event-management/public/dashboard/edit-category.php?id=$categoryId' type='button' class='icon-button icon-button--dark icon-button--mr-minus8' title='Edit'>
+                                <a href='edit-category.php?id=$categoryId' type='button' class='icon-button icon-button--dark icon-button--mr-minus8' title='Edit'>
                                     <i class='icon-button__icon'>$editIcon</i>
                                 </a>
     
@@ -53,7 +57,7 @@ if (isset($_GET["action"]) && $_GET["action"] == "fetchCategories") {
             <div class='feedback-container'>
                 <p class='text--danger'>There are no categories yet!</p>
     
-                <a href='/event-management/public/dashboard/create-category.php' class='button button--primary'>
+                <a href='create-category.php' class='button button--primary'>
                     Add category
                 </a>
             </div>

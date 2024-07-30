@@ -24,5 +24,5 @@ if (isset($_SESSION["loggedUserPermissions"])) {
     unset($_SESSION["loggedUserPermissions"]);
 }
 
-header("Location: ../public/login.php");
+header("Location: ../login.php");
 exit();

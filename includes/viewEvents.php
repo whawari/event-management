@@ -3,15 +3,15 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-$rootDir = $_SERVER["DOCUMENT_ROOT"];
-require_once $rootDir . "/event-management/config/db-connect.php";
-require_once $rootDir . "/event-management/config/permissions.php";
-require_once $rootDir . "/event-management/helpers/hasPermission.php";
+require_once "../config/root-directory.php";
+require_once "../config/db-connect.php";
+require_once "../config/permissions.php";
+require_once "../helpers/hasPermission.php";
 
-$attendIcon = file_get_contents($rootDir . "/event-management/public/images/icons/attend.svg");
-$attendedIcon = file_get_contents($rootDir . "/event-management/public/images/icons/attended.svg");
-$attendingIcon = file_get_contents($rootDir . "/event-management/public/images/icons/attending.svg");
-$locationIcon = file_get_contents($rootDir . "/event-management/public/images/icons/location.svg");
+$attendIcon = file_get_contents("../public/images/icons/attend.svg");
+$attendedIcon = file_get_contents("../public/images/icons/attended.svg");
+$attendingIcon = file_get_contents("../public/images/icons/attending.svg");
+$locationIcon = file_get_contents("../public/images/icons/location.svg");
 
 if (isset($_GET["action"]) && $_GET["action"] == "fetchEvents") {
     $loggedUserId = "";
@@ -150,10 +150,10 @@ if (isset($_GET["action"]) && $_GET["action"] == "fetchEvents") {
         $count = mysqli_num_rows($result);
 
         if ($count) {
-            $uploadsFolderDirectory = "/event-management/public/images/uploads/";
+            $uploadsFolderDirectory = $rootDirectory . "public/images/uploads/";
 
-            $editIcon = file_get_contents($rootDir . '/event-management/public/images/icons/edit.svg');
-            $deleteIcon = file_get_contents($rootDir . '/event-management/public/images/icons/delete.svg');
+            $editIcon = file_get_contents('../public/images/icons/edit.svg');
+            $deleteIcon = file_get_contents('../public/images/icons/delete.svg');
 
             $counter = 1;
 
@@ -209,7 +209,7 @@ if (isset($_GET["action"]) && $_GET["action"] == "fetchEvents") {
                     if (hasPermission($editEvent) && hasPermission($deleteEvent)) {
                         $footer = "
                         <div class='events-grid__item__footer'>
-                            <a href='/event-management/public/dashboard/edit-event.php?id=$eventId' type='button' class='icon-button icon-button--dark icon-button--mr-minus8' title='Edit'>
+                            <a href='" . $rootDirectory . "dashboard/edit-event.php?id=$eventId' type='button' class='icon-button icon-button--dark icon-button--mr-minus8' title='Edit'>
                                 <i class='icon-button__icon'>$editIcon</i>
                             </a>
         
@@ -221,7 +221,7 @@ if (isset($_GET["action"]) && $_GET["action"] == "fetchEvents") {
                     } else if (hasPermission($editEvent)) {
                         $footer = "
                         <div class='events-grid__item__footer'>
-                            <a href='/event-management/public/dashboard/edit-event.php?id=$eventId' type='button' class='icon-button icon-button--dark icon-button--mr-minus8' title='Edit'>
+                            <a href='" . $rootDirectory . "dashboard/edit-event.php?id=$eventId' type='button' class='icon-button icon-button--dark icon-button--mr-minus8' title='Edit'>
                                 <i class='icon-button__icon'>$editIcon</i>
                             </a>
                         </div>
@@ -239,7 +239,7 @@ if (isset($_GET["action"]) && $_GET["action"] == "fetchEvents") {
 
                 echo "
                     <div class='events-grid__item'>
-                        <a href='/event-management/public/event.php?id=$eventId' class='events-grid__item__anchor'>
+                        <a href='" . $rootDirectory . "event.php?id=$eventId' class='events-grid__item__anchor'>
                             <img src='$imageSrc' alt='$eventTitle' class='events-grid__item__anchor__img'>
                         </a>
 
@@ -253,7 +253,7 @@ if (isset($_GET["action"]) && $_GET["action"] == "fetchEvents") {
                                     $eventLocation
                                 </span>
                             
-                                <a href='/event-management/public/event.php?id=$eventId' class='text--dark'>
+                                <a href='" . $rootDirectory . "event.php?id=$eventId' class='text--dark'>
                                     <h5 class='events-grid__item__content__box__title'>$eventTitle</h5>
                                 </a>
                             </div>
@@ -284,7 +284,7 @@ if (isset($_GET["action"]) && $_GET["action"] == "fetchEvents") {
             if ($requestLocation === "homepage" && $counter >= 6) {
                 echo "
                     <div class='centered-box mt-24'>
-                        <a href='/event-management/public/events.php' class='button button--primary'>
+                        <a href='" . $rootDirectory . "events.php' class='button button--primary'>
                             Browse more
                         </a>
                     </div>
@@ -295,7 +295,7 @@ if (isset($_GET["action"]) && $_GET["action"] == "fetchEvents") {
             if ($loggedUserId) {
                 if (hasPermission($createEvent)) {
                     $addEventCta = "
-                    <a href='/event-management/public/dashboard/create-event.php' class='button button--primary'>
+                    <a href='" . $rootDirectory . "dashboard/create-event.php' class='button button--primary'>
                         Add event
                     </a>
                     ";
@@ -303,7 +303,7 @@ if (isset($_GET["action"]) && $_GET["action"] == "fetchEvents") {
 
                 if (hasPermission($attendEvent)) {
                     $addEventCta = "
-                    <a href='/event-management/public/events.php' class='button button--primary'>
+                    <a href='" . $rootDirectory . "events.php' class='button button--primary'>
                         Browse events
                     </a>
                     ";

@@ -2,6 +2,37 @@
 if (!isset($_SESSION)) {
     session_start();
 }
+
+require_once "config/db-connect.php";
+require_once "helpers/getCategoryById.php";
+
+$attendIcon = file_get_contents("public/images/icons/attend.svg");
+$attendedIcon = file_get_contents("public/images/icons/attended.svg");
+$attendingIcon = file_get_contents("public/images/icons/attending.svg");
+
+$categoryId = "";
+$categoryName = "";
+$categoryImage = "";
+$categoryError = "";
+$category = array();
+
+if (isset($_GET["id"])) {
+    $categoryId = $_GET["id"];
+
+    $category = getCategoryById($connection, $categoryId ?? "null");
+
+    if (isset($category["error"])) {
+        $categoryError = $category["error"];
+    } else {
+        $categoryName = $category["name"];
+        $categoryImage = $category["image_name"];
+    }
+} else {
+    $categoryError = "Category not found";
+}
+
+mysqli_close($connection);
+
 ?>
 
 <!DOCTYPE html>
@@ -17,46 +48,76 @@ if (!isset($_SESSION)) {
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
 
     <!-- Custom styles -->
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/events.css">
-    <link rel="stylesheet" href="css/snackbar.css">
-    <link rel="stylesheet" href="css/events-page.css">
+    <link rel="stylesheet" href="public/css/index.css">
+    <link rel="stylesheet" href="public/css/events.css">
+    <link rel="stylesheet" href="public/css/snackbar.css">
+    <link rel="stylesheet" href="public/css/category-page.css">
 
     <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
-    <title>EventHub - Events</title>
+    <title>EventHub - Category<?php echo $categoryName ? " | " . $categoryName : "" ?></title>
 </head>
 
 <body>
 
-    <?php include "../templates/header.php"; ?>
+    <?php include "templates/header.php"; ?>
 
-    <div class="events">
-        <div class="container">
-            <div id="events"></div>
-
-            <div class="feedback-container">
-                <i class="spinner" id="spinner">
-                    <?php echo file_get_contents($rootDirectory . "/event-management/public/images/icons/spinner.svg") ?>
-                </i>
-
-                <p class="text--danger" id="feedback"></p>
+    <div class="category">
+        <?php
+        if ($category && !$categoryError) {
+            echo "
+            <div class='category__header' style='background-image: url(public/images/uploads/$categoryImage);'>
+                <div class='category__header__overlay'>
+                    <h1 class='text--large text--light text--center'>$categoryName</h1>
+                </div>
             </div>
-        </div>
+
+            <div class='category__content'>
+                <div class='container'>
+                    <div id='events'></div>
+
+                    <div class='feedback-container'>
+                        <i class='spinner' id='spinner'>
+                            <?php echo file_get_contents('public/images/icons/spinner.svg') ?>
+                        </i>
+
+                        <p class='text--danger' id='feedback'></p>
+                    </div>
+                </div>
+            </div>
+            ";
+        } else {
+            echo "
+            <div class='category__error container'>
+                <p class='text--danger'>$categoryError</p>
+
+                <a href='categories.php' class='button button--primary'>Browse categories</a>
+            </div>
+            ";
+        }
+        ?>
+
+
     </div>
 
-    <?php include "../templates/footer.php"; ?>
+    <?php require_once "templates/footer.php"; ?>
 
     <?php
     if (isset($_SESSION["loggedUserId"])) {
-        include "../templates/dashboard-floating-button.php";
+        require_once "templates/dashboard-floating-button.php";
     }
     ?>
 
     <script type="text/javascript">
         $(document).ready(function() {
-            fetchEvents();
+            <?php
+            if (!$categoryError && $categoryId) {
+            ?>
+                fetchEvents();
+            <?php
+            }
+            ?>
 
             $(document).on("click", "#snackbar-close", function() {
                 hideSnackbar();
@@ -73,11 +134,13 @@ if (!isset($_SESSION)) {
 
         function fetchEvents() {
             $.ajax({
-                url: "../includes/viewEvents.php",
+                url: "includes/viewEvents.php",
                 method: "GET",
                 data: {
                     action: "fetchEvents",
-                    requestLocation: "events"
+                    requestLocation: "category",
+                    categoryId: <?php echo $categoryId ? $categoryId : "null" ?>
+
                 },
                 success: function(data) {
                     $('#events').html(data);
@@ -95,7 +158,7 @@ if (!isset($_SESSION)) {
 
         function attendEvent($eventId) {
             $.ajax({
-                url: "../includes/attendEvent.php",
+                url: "includes/attendEvent.php",
                 method: "GET",
                 data: {
                     action: "attendEvent",
@@ -119,7 +182,7 @@ if (!isset($_SESSION)) {
 
         function unattendEvent($eventId) {
             $.ajax({
-                url: "../includes/unattendEvent.php",
+                url: "includes/unattendEvent.php",
                 method: "GET",
                 data: {
                     action: "attendEvent",

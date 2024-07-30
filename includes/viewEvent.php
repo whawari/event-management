@@ -3,19 +3,18 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-$rootDir = $_SERVER["DOCUMENT_ROOT"];
+require_once "../config/root-directory.php";
+require_once "../config/db-connect.php";
+require_once "../config/permissions.php";
+require_once "../helpers/hasPermission.php";
 
-require_once $rootDir . "/event-management/config/db-connect.php";
-require_once $rootDir . "/event-management/config/permissions.php";
-require_once $rootDir . "/event-management/helpers/hasPermission.php";
-
-$attendIcon = file_get_contents($rootDir . "/event-management/public/images/icons/attend.svg");
-$attendedIcon = file_get_contents($rootDir . "/event-management/public/images/icons/attended.svg");
-$attendingIcon = file_get_contents($rootDir . "/event-management/public/images/icons/attending.svg");
-$editIcon = file_get_contents($rootDir . "/event-management/public/images/icons/edit.svg");
-$locationIcon = file_get_contents($rootDir . "/event-management/public/images/icons/location.svg");
-$clockIcon = file_get_contents($rootDir . "/event-management/public/images/icons/clock.svg");
-$emailIcon = file_get_contents($rootDir . "/event-management/public/images/icons/email.svg");
+$attendIcon = file_get_contents("../public/images/icons/attend.svg");
+$attendedIcon = file_get_contents("../public/images/icons/attended.svg");
+$attendingIcon = file_get_contents("../public/images/icons/attending.svg");
+$editIcon = file_get_contents("../public/images/icons/edit.svg");
+$locationIcon = file_get_contents("../public/images/icons/location.svg");
+$clockIcon = file_get_contents("../public/images/icons/clock.svg");
+$emailIcon = file_get_contents("../public/images/icons/email.svg");
 
 if (empty($_GET["eventId"]) || $_GET["eventId"] == "null" || $_GET["eventId"] == null) {
     header('HTTP/1.1 400 Bad Request');
@@ -83,7 +82,7 @@ if (isset($_GET["action"]) && $_GET["action"] === "fetchEvent") {
 
     $event = mysqli_fetch_assoc($result);
 
-    $uploadsFolderDirectory = "/event-management/public/images/uploads/";
+    $uploadsFolderDirectory = $rootDirectory . "public/images/uploads/";
     $imageSrc = $uploadsFolderDirectory . $event["image_name"];
     $eventTitle = $event["title"];
     $eventDescription = $event["description"];
@@ -118,7 +117,7 @@ if (isset($_GET["action"]) && $_GET["action"] === "fetchEvent") {
 
     $categoryNameSection = "";
     if ($categoryName) {
-        $categoryNameSection = "<a href='/event-management/public/category.php?id=$categoryId' class='subtitle link link--accent event-category'>$categoryName</a>";
+        $categoryNameSection = "<a href='category.php?id=$categoryId' class='subtitle link link--accent event-category'>$categoryName</a>";
     }
 
     $organizedBySection = "";
@@ -173,7 +172,7 @@ if (isset($_GET["action"]) && $_GET["action"] === "fetchEvent") {
         } else if (hasPermission($editEvent)) {
             $editSection = "
             <div class='event__content__body__action'>
-                <a href='/event-management/public/dashboard/edit-event.php?id=$eventId' type='button' class='icon-button icon-button--dark icon-button--mr-minus8' title='Edit'>
+                <a href='dashboard/edit-event.php?id=$eventId' type='button' class='icon-button icon-button--dark icon-button--mr-minus8' title='Edit'>
                     <i class='icon-button__icon'>$editIcon</i>
                 </a>
             </div>
